@@ -2,7 +2,7 @@ name: Release Charts
 
 on:
   push:
-    tags:
+    branches:
       - '*'
 
 jobs:
@@ -31,8 +31,3 @@ jobs:
 #        run: |
 #          helm plugin install https://github.com/instrumenta/helm-kubeval
 #          helm kubeval charts/*
-
-      - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.2.1
-        env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
