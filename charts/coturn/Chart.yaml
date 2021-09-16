@@ -1,0 +1,5 @@
+apiVersion: v2
+name: coturn
+description: A Helm chart to deploy coturn
+type: application
+version: 0.1.0
