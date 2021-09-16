@@ -18,8 +18,8 @@ coturn:
     type: ClusterIP
 
   authentification:
-    username: coturn
-    password: "coturn12345"
+    username:
+    password:
 
   image:
     repository: "instrumentisto/coturn"
