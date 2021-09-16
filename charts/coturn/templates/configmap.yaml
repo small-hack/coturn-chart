@@ -12,11 +12,12 @@ data:
     pidfile=/var/tmp/turnserver.pid
     userdb=/var/tmp/turnserver.db
 
+    # Specify the user for the TURN authentification
+    {{if .Values.coturn.authentification.username}}
     # Enable long-term credential mechanism
     lt-cred-mech
-
-    # Specify the user for the TURN authentification
     user={{.Values.coturn.authentification.username}}:{{.Values.coturn.authentification.password}}
+    {{end}}
 
     no-cli
     no-tls
