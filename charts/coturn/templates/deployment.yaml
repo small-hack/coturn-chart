@@ -16,7 +16,7 @@ spec:
     metadata:
       annotations:
         # re-roll deployment on config change
-        checksum/coturn-config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/coturn-config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
       labels:
         app.kubernetes.io/name: {{ include "coturn.fullname" . }}-coturn
         app.kubernetes.io/instance: {{ .Release.Name }}
@@ -59,7 +59,7 @@ spec:
           {{- end }}
       volumes:
         - name: coturn-config
-          configMap:
-            name: {{ include "coturn.fullname" . }}-coturn-config
+          secret:
+            secretName: {{ include "coturn.fullname" . }}-coturn-config
         - name: var-tmp
           emptyDir: {}

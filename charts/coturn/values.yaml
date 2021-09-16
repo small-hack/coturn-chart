@@ -3,7 +3,6 @@ nameOverride: ""
 fullnameOverride: ""
 
 coturn:
-  realm: "iits-consulting.de"
   traefik:
     tcp:
       enabled: true
@@ -17,10 +16,6 @@ coturn:
   service:
     type: ClusterIP
 
-  authentification:
-    username:
-    password:
-
   image:
     repository: "instrumentisto/coturn"
     tag: "4.5.1.3"
@@ -31,3 +26,20 @@ coturn:
   # Coturn specific labels
   labels:
     component: coturn
+  config: |
+    realm=turn-domain.de
+
+    log-file=stdout
+    pidfile=/var/tmp/turnserver.pid
+    userdb=/var/tmp/turnserver.db
+
+    # Specify the user for the TURN authentification
+    # Enable long-term credential mechanism
+    lt-cred-mech
+    user=Username:Password
+
+    no-cli
+    no-tls
+    no-dtls
+    verbose
+    prod

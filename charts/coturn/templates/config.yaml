@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "coturn.fullname" . }}-coturn-config
+  labels:
+{{ include "labels" . | nindent 4}}
+data:
+  turnserver.conf: {{.Values.coturn.config | b64enc}}
