@@ -9,9 +9,7 @@
 How to install:
 
 ```shell
-    export CHART_NAME=coturn
-    export CHART_REPO_NAME=coturn-chart
-    helm repo add $CHART_REPO_NAME https://iits-consulting.github.io/$CHART_REPO_NAME/
-    helm search repo $CHART_NAME
-    helm install $CHART_NAME $CHART_REPO_NAME/$CHART_NAME
+    helm repo add coturn-chart https://iits-consulting.github.io/coturn-chart/
+    helm search repo coturn
+    helm install coturn coturn-chart/coturn
 ```
