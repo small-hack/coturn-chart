@@ -8,12 +8,19 @@ spec:
   type: {{ .Values.coturn.service.type }}
   ports:
     - port: 3478
-      targetPort: turn-3478
+      targetPort: turn-udp
       {{- if eq .Values.coturn.service.type "NodePort" }}
-      nodePort: 3478
+      nodePort: {{ default .Values.coturn.service.nodePort 31757 }}
       {{- end }}
       protocol: UDP
-      name: turn-3478
+      name: turn-udp
+    - port: 3478
+      targetPort: turn-tcp
+      {{- if eq .Values.coturn.service.type "NodePort" }}
+      nodePort: {{ default .Values.coturn.service.nodePort 31757 }}
+      {{- end }}
+      protocol: TCP
+      name: turn-tcp
   selector:
     app.kubernetes.io/name: {{ include "coturn.fullname" . }}-coturn
     app.kubernetes.io/instance: {{ .Release.Name }}

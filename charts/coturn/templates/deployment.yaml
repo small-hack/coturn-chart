@@ -37,9 +37,12 @@ spec:
           imagePullPolicy: {{ .Values.coturn.image.pullPolicy }}
           args: ["-c", "/turnserver.conf"]
           ports:
-            - name: turn-3478
+            - name: turn-udp
               containerPort: 3478
               protocol: UDP
+            - name: turn-tcp
+              containerPort: 3478
+              protocol: TCP
           volumeMounts:
             - name: coturn-config
               mountPath: /turnserver.conf
