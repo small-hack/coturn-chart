@@ -43,6 +43,9 @@ spec:
             - name: turn-tcp
               containerPort: 3478
               protocol: TCP
+            - name: tcp-proxy
+              containerPort: 5555
+              protocol: TCP
           volumeMounts:
             - name: coturn-config
               mountPath: /turnserver.conf

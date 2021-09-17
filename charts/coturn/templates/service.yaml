@@ -21,6 +21,10 @@ spec:
       {{- end }}
       protocol: TCP
       name: turn-tcp
+    - name: tcp-proxy
+      targetPort: tcp-proxy
+      port: 5555
+      protocol: TCP
   selector:
     app.kubernetes.io/name: {{ include "coturn.fullname" . }}-coturn
     app.kubernetes.io/instance: {{ .Release.Name }}
