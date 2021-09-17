@@ -1,3 +1,4 @@
+{{- $portRange := untilStep (int .Values.coturn.ports.from) (int (add1 .Values.coturn.ports.to)) 1 -}}
 apiVersion: apps/v1
 kind: {{ .Values.coturn.kind }}
 metadata:
@@ -37,12 +38,20 @@ spec:
           imagePullPolicy: {{ .Values.coturn.image.pullPolicy }}
           args: ["-c", "/turnserver.conf"]
           ports:
-            - name: turn-udp
-              containerPort: 3478
+            {{- range $portRange }}
+            - name: turn-udp-{{ . }}
+              containerPort: {{ . }}
+              {{- if eq $.Values.coturn.kind "DaemonSet" }}
+              hostPort: {{ . }}
+              {{- end }}
               protocol: UDP
-            - name: turn-tcp
-              containerPort: 3478
+            - name: turn-tcp-{{ . }}
+              containerPort: {{ . }}
+              {{- if eq $.Values.coturn.kind "DaemonSet" }}
+              hostPort: {{ . }}
+              {{- end }}
               protocol: TCP
+            {{- end }}
           volumeMounts:
             - name: coturn-config
               mountPath: /turnserver.conf
