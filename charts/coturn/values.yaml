@@ -3,9 +3,6 @@ nameOverride: ""
 fullnameOverride: ""
 
 coturn:
-  ports:
-    from: 31750
-    to: 31760
   traefik:
     tcp:
       enabled: true
@@ -15,9 +12,9 @@ coturn:
     udp:
       enabled: false
       entrypoint: coturn-udp
-  kind: Daemonset
+  kind: Deployment
   service:
-    type: NodePort
+    type: ClusterIP
 
   image:
     repository: "instrumentisto/coturn"
@@ -40,9 +37,6 @@ coturn:
     # Enable long-term credential mechanism
     lt-cred-mech
     user=Username:Password
-
-    min-port=31750
-    max-port=31760
 
     no-cli
     no-tls
