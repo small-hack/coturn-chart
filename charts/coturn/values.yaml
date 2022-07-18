@@ -1,64 +1,63 @@
-coturn:
-  # imagePullSecrets:
-  replicas: 2
+# imagePullSecrets:
+replicas: 2
+# REPLACE ME
+elbId:
+service:
+  externalTrafficPolicy: Local
+  annotations:
+    kubernetes.io/elb.id: "{{ .Values.coturn.elbId }}"
+    kubernetes.io/elb.health-check-flag: "off"
+image:
+  repository: "instrumentisto/coturn"
+  tag: "4.5.1.3"
+  pullPolicy: IfNotPresent
+replicaCount: 1
+resources: { }
+# Coturn specific labels
+labels:
+  component: coturn
+ports:
+  min: 49152
+  max: 65535
+  listening: 3478
+  tlsListening: 5349
+
+#Enable auto issuing certificates over cert-manager certificates https://cert-manager.io/docs/concepts/certificate/
+certificate:
+  enabled: true
   # REPLACE ME
-  elbId:
-  service:
-    externalTrafficPolicy: Local
-    annotations:
-      kubernetes.io/elb.id: "{{ .Values.coturn.elbId }}"
-      kubernetes.io/elb.health-check-flag: "off"
-  image:
-    repository: "instrumentisto/coturn"
-    tag: "4.5.1.3"
-    pullPolicy: IfNotPresent
-  replicaCount: 1
-  resources: { }
-  # Coturn specific labels
-  labels:
-    component: coturn
-  ports:
-    min: 49152
-    max: 65535
-    listening: 3478
-    tlsListening: 5349
+  host:
+  secret: "turn-tls"
+  issuerName: "letsencrypt"
 
-  #Enable auto issuing certificates over cert-manager certificates https://cert-manager.io/docs/concepts/certificate/
-  certificate:
-    enabled: true
+config:
+  auth:
+    username: "turnUser"
     # REPLACE ME
-    host:
-    secret: "turn-tls"
-    issuerName: "letsencrypt"
-
-  config:
-    auth:
-      username: "turnUser"
-      # REPLACE ME
-      password:
-    externalDatabase:
-      #REPLACE ME IF NEEDED
-      user: ""
-      #REPLACE ME IF NEEDED
-      host: ""
-      #REPLACE ME IF NEEDED
-      database: ""
-      #REPLACE ME IF NEEDED
-      port: ""
-      #REPLACE ME IF NEEDED
-      password: ""
-    turnserver: |
-      realm={{ .Values.coturn.certificate.host }}
-      listening-ip=0.0.0.0
-      listening-port={{ .Values.coturn.ports.listening }}
-      tls-listening-port={{ .Values.coturn.ports.tlsListening }}
-      min-port={{ .Values.coturn.ports.min }}
-      max-port={{ .Values.coturn.ports.max }}
-      log-file=stdout
-      verbose
-      pidfile=/var/tmp/turnserver.pid
-      lt-cred-mech
-      user={{ .Values.coturn.config.auth.username }}:{{ .Values.coturn.config.auth.password }}
-      pkey=/tls/tls.key
-      cert=/tls/tls.crt
-      psql-userdb="host={{ .Values.coturn.config.externalDatabase.host }} port={{ .Values.coturn.config.externalDatabase.port }} dbname={{ .Values.coturn.config.externalDatabase.database }} user={{ .Values.coturn.config.externalDatabase.user }} password={{ .Values.coturn.config.externalDatabase.password }} connect_timeout=30"
+    password:
+  externalDatabase:
+    #REPLACE ME IF NEEDED
+    user: ""
+    #REPLACE ME IF NEEDED
+    host: ""
+    #REPLACE ME IF NEEDED
+    database: ""
+    #REPLACE ME IF NEEDED
+    port: ""
+    #REPLACE ME IF NEEDED
+    password: ""
+  turnserver: |
+    realm={{ .Values.coturn.certificate.host }}
+    listening-ip=0.0.0.0
+    listening-port={{ .Values.coturn.ports.listening }}
+    tls-listening-port={{ .Values.coturn.ports.tlsListening }}
+    min-port={{ .Values.coturn.ports.min }}
+    max-port={{ .Values.coturn.ports.max }}
+    log-file=stdout
+    verbose
+    pidfile=/var/tmp/turnserver.pid
+    lt-cred-mech
+    user={{ .Values.coturn.config.auth.username }}:{{ .Values.coturn.config.auth.password }}
+    pkey=/tls/tls.key
+    cert=/tls/tls.crt
+    psql-userdb="host={{ .Values.coturn.config.externalDatabase.host }} port={{ .Values.coturn.config.externalDatabase.port }} dbname={{ .Values.coturn.config.externalDatabase.database }} user={{ .Values.coturn.config.externalDatabase.user }} password={{ .Values.coturn.config.externalDatabase.password }} connect_timeout=30"

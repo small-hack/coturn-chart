@@ -5,7 +5,7 @@ metadata:
   labels:
 {{ include "labels" . | indent 4 }}
 spec:
-  replicas: {{ .Values.coturn.replicas }}
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ .Release.Name }}-coturn
@@ -28,21 +28,21 @@ spec:
         runAsGroup: 1000
       containers:
         - name: "coturn"
-          image: "{{ .Values.coturn.image.repository }}:{{ .Values.coturn.image.tag }}"
-          imagePullPolicy: {{ .Values.coturn.image.pullPolicy }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           args: ["-c", "/turnserver.conf"]
           ports:
             - name: turn-udp
-              containerPort: {{ .Values.coturn.ports.listening }}
+              containerPort: {{ .Values.ports.listening }}
               protocol: UDP
             - name: turn-tcp
-              containerPort: {{ .Values.coturn.ports.listening }}
+              containerPort: {{ .Values.ports.listening }}
               protocol: TCP
             - name: turn-tcp-tls
-              containerPort: {{ .Values.coturn.ports.tlsListening }}
+              containerPort: {{ .Values.ports.tlsListening }}
               protocol: TCP
             - name: turn-udp-dtls
-              containerPort: {{ .Values.coturn.ports.tlsListening }}
+              containerPort: {{ .Values.ports.tlsListening }}
               protocol: UDP
           volumeMounts:
             - name: {{ .Release.Name }}-config
@@ -60,14 +60,14 @@ spec:
                 - ALL
             readOnlyRootFilesystem: true
             allowPrivilegeEscalation: false
-          {{- with .Values.coturn.resources }}
+          {{- with .Values.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
       volumes:
         - name: tls
           secret:
-            secretName: {{ .Values.coturn.certificate.secret }}
+            secretName: {{ .Values.certificate.secret }}
         - name: {{ .Release.Name }}-config
           secret:
             secretName: {{ .Release.Name }}-config

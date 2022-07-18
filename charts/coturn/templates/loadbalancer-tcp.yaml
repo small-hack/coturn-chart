@@ -3,20 +3,20 @@ kind: Service
 metadata:
   name: {{ .Release.Name }}-turn-tcp
   annotations:
-    {{- range $key, $value := $.Values.coturn.service.annotations }}
+    {{- range $key, $value := $.Values.service.annotations }}
       "{{ $key }}": "{{ tpl $value $ }}"
     {{- end }}
 spec:
-  externalTrafficPolicy: {{.Values.coturn.service.externalTrafficPolicy}}
+  externalTrafficPolicy: {{.Values.service.externalTrafficPolicy}}
   ports:
     - name: turn-tcp
-      port: {{ .Values.coturn.ports.listening }}
+      port: {{ .Values.ports.listening }}
       protocol: TCP
-      targetPort: {{ .Values.coturn.ports.listening }}
+      targetPort: {{ .Values.ports.listening }}
     - name: turn-tcp-tls
-      port: {{ .Values.coturn.ports.tlsListening }}
+      port: {{ .Values.ports.tlsListening }}
       protocol: TCP
-      targetPort: {{ .Values.coturn.ports.tlsListening }}
+      targetPort: {{ .Values.ports.tlsListening }}
   selector:
     app.kubernetes.io/name: {{ .Release.Name }}-coturn
     app.kubernetes.io/instance: {{ .Release.Name }}

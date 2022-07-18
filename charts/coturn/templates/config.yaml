@@ -5,4 +5,4 @@ metadata:
   labels:
 {{ include "labels" . | nindent 4}}
 data:
-  turnserver.conf: {{ tpl .Values.coturn.config.turnserver . | b64enc}}
+  turnserver.conf: {{ tpl .Values.config.turnserver . | b64enc}}
