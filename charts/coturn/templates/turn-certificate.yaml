@@ -8,10 +8,10 @@ spec:
   issuerRef:
     name: {{.Values.coturn.certificate.issuerName}}
     kind: ClusterIssuer
-  commonName: {{ .Values.coturn.certificate.realm | quote }}
+  commonName: {{ .Values.coturn.certificate.host | quote }}
   privateKey:
     algorithm: "RSA"
     size: 4096
   dnsNames:
-    - {{ .Values.coturn.certificate.realm | quote }}
+    - {{ .Values.coturn.certificate.host | quote }}
 {{- end }}

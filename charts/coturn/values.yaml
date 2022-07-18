@@ -27,7 +27,7 @@ coturn:
   certificate:
     enabled: true
     # REPLACE ME
-    realm:
+    host:
     secret: "turn-tls"
     issuerName: "letsencrypt"
 
@@ -48,7 +48,7 @@ coturn:
       #REPLACE ME IF NEEDED
       password: ""
     turnserver: |
-      realm={{ .Values.coturn.realm }}
+      realm={{ .Values.coturn.certificate.host }}
       listening-ip=0.0.0.0
       listening-port={{ .Values.coturn.ports.listening }}
       tls-listening-port={{ .Values.coturn.ports.tlsListening }}
