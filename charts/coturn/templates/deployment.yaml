@@ -67,7 +67,7 @@ spec:
       volumes:
         - name: tls
           secret:
-            secretName: {{.Release.Name}}
+            secretName: {{ .Values.coturn.certificate.secret }}
         - name: {{ .Release.Name }}-config
           secret:
             secretName: {{ .Release.Name }}-config
