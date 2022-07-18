@@ -5,7 +5,7 @@ elbId:
 service:
   externalTrafficPolicy: Local
   annotations:
-    kubernetes.io/elb.id: "{{ .Values.coturn.elbId }}"
+    kubernetes.io/elb.id: "{{ .Values.elbId }}"
     kubernetes.io/elb.health-check-flag: "off"
 image:
   repository: "instrumentisto/coturn"
@@ -47,17 +47,17 @@ config:
     #REPLACE ME IF NEEDED
     password: ""
   turnserver: |
-    realm={{ .Values.coturn.certificate.host }}
+    realm={{ .Values.certificate.host }}
     listening-ip=0.0.0.0
-    listening-port={{ .Values.coturn.ports.listening }}
-    tls-listening-port={{ .Values.coturn.ports.tlsListening }}
-    min-port={{ .Values.coturn.ports.min }}
-    max-port={{ .Values.coturn.ports.max }}
+    listening-port={{ .Values.ports.listening }}
+    tls-listening-port={{ .Values.ports.tlsListening }}
+    min-port={{ .Values.ports.min }}
+    max-port={{ .Values.ports.max }}
     log-file=stdout
     verbose
     pidfile=/var/tmp/turnserver.pid
     lt-cred-mech
-    user={{ .Values.coturn.config.auth.username }}:{{ .Values.coturn.config.auth.password }}
+    user={{ .Values.config.auth.username }}:{{ .Values.config.auth.password }}
     pkey=/tls/tls.key
     cert=/tls/tls.crt
-    psql-userdb="host={{ .Values.coturn.config.externalDatabase.host }} port={{ .Values.coturn.config.externalDatabase.port }} dbname={{ .Values.coturn.config.externalDatabase.database }} user={{ .Values.coturn.config.externalDatabase.user }} password={{ .Values.coturn.config.externalDatabase.password }} connect_timeout=30"
+    psql-userdb="host={{ .Values.config.externalDatabase.host }} port={{ .Values.config.externalDatabase.port }} dbname={{ .Values.config.externalDatabase.database }} user={{ .Values.config.externalDatabase.user }} password={{ .Values.config.externalDatabase.password }} connect_timeout=30"
