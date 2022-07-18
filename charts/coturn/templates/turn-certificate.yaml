@@ -1,0 +1,17 @@
+{{- if .Values.coturn.certificate.enabled }}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name:  {{.Release.Name }}
+spec:
+  secretName:  {{ .Values.coturn.certificate.secret }}
+  issuerRef:
+    name: {{.Values.coturn.certificate.issuerName}}
+    kind: ClusterIssuer
+  commonName: {{ .Values.coturn.certificate.realm | quote }}
+  privateKey:
+    algorithm: "RSA"
+    size: 4096
+  dnsNames:
+    - {{ .Values.coturn.certificate.realm | quote }}
+{{- end }}

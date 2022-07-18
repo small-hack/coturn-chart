@@ -1,24 +1,22 @@
 apiVersion: apps/v1
-kind: {{ .Values.coturn.kind }}
+kind: Deployment
 metadata:
-  name: {{ include "coturn.fullname" . }}-coturn
+  name: {{ .Release.Name }}-coturn
   labels:
 {{ include "labels" . | indent 4 }}
 spec:
-  {{- if eq .Values.coturn.kind "Deployment" }}
-  replicas: {{ .Values.coturn.replicaCount }}
-  {{- end }}
+  replicas: {{ .Values.coturn.replicas }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "coturn.fullname" . }}-coturn
+      app.kubernetes.io/name: {{ .Release.Name }}-coturn
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       annotations:
         # re-roll deployment on config change
-        checksum/coturn-config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
+        checksum/{{ .Release.Name }}-config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
       labels:
-        app.kubernetes.io/name: {{ include "coturn.fullname" . }}-coturn
+        app.kubernetes.io/name: {{ .Release.Name }}-coturn
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -28,9 +26,6 @@ spec:
       securityContext:
         runAsUser: 1000
         runAsGroup: 1000
-      {{- if eq .Values.coturn.kind "DaemonSet" }}
-      hostNetwork: true
-      {{- end }}
       containers:
         - name: "coturn"
           image: "{{ .Values.coturn.image.repository }}:{{ .Values.coturn.image.tag }}"
@@ -38,18 +33,24 @@ spec:
           args: ["-c", "/turnserver.conf"]
           ports:
             - name: turn-udp
-              containerPort: 3478
+              containerPort: {{ .Values.coturn.ports.listening }}
               protocol: UDP
             - name: turn-tcp
-              containerPort: 3478
+              containerPort: {{ .Values.coturn.ports.listening }}
               protocol: TCP
-            - name: tcp-proxy
-              containerPort: 5555
+            - name: turn-tcp-tls
+              containerPort: {{ .Values.coturn.ports.tlsListening }}
               protocol: TCP
+            - name: turn-udp-dtls
+              containerPort: {{ .Values.coturn.ports.tlsListening }}
+              protocol: UDP
           volumeMounts:
-            - name: coturn-config
+            - name: {{ .Release.Name }}-config
               mountPath: /turnserver.conf
               subPath: turnserver.conf
+              readOnly: true
+            - name: tls
+              mountPath: /tls
               readOnly: true
             - name: var-tmp
               mountPath: /var/tmp
@@ -64,8 +65,11 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
       volumes:
-        - name: coturn-config
+        - name: tls
           secret:
-            secretName: {{ include "coturn.fullname" . }}-coturn-config
+            secretName: {{.Release.Name}}
+        - name: {{ .Release.Name }}-config
+          secret:
+            secretName: {{ .Release.Name }}-config
         - name: var-tmp
           emptyDir: {}

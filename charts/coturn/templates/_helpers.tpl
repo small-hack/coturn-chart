@@ -1,7 +1,3 @@
-{{- define "coturn.fullname" -}}
-{{.Release.Name}}
-{{- end -}}
-
 {{- define "coturn.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
