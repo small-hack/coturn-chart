@@ -1,6 +1,6 @@
 # coturn
 
-![Version: 3.0.2](https://img.shields.io/badge/Version-3.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.6.2](https://img.shields.io/badge/AppVersion-4.6.2-informational?style=flat-square)
+![Version: 3.0.3](https://img.shields.io/badge/Version-3.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.6.2](https://img.shields.io/badge/AppVersion-4.6.2-informational?style=flat-square)
 
 A Helm chart to deploy coturn
 
@@ -8,9 +8,9 @@ A Helm chart to deploy coturn
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| certificate.enabled | bool | `true` | Enables auto issuing certificates over cert-manager certificates https://cert-manager.io/docs/concepts/certificate/ |
+| certificate.enabled | bool | `false` | Enables auto issuing certificates over cert-manager certificates https://cert-manager.io/docs/concepts/certificate/ |
 | certificate.host | string | `"turn.example.com"` | REPLACE ME - hostname for ssl cert |
-| certificate.issuerName | string | `"letsencrypt"` | name of cert-manager issuer to use for cert generation |
+| certificate.issuerName | string | `"letsencrypt-staging"` | name of cert-manager issuer to use for cert generation. change to production issuer when you're stable |
 | certificate.secret | string | `"turn-tls"` | name of secret to create for ssl cert |
 | config.auth.existingSecret | string | `""` | not working: existing secret with keys username/password for coturn |
 | config.turnserver | string | `"realm={{ .Values.certificate.host }}\nlistening-ip=0.0.0.0\nlistening-port={{ .Values.ports.listening }}\ntls-listening-port={{ .Values.ports.tlsListening }}\nmin-port={{ .Values.ports.min }}\nmax-port={{ .Values.ports.max }}\nlog-file=stdout\nverbose\npidfile=/var/tmp/turnserver.pid\nlt-cred-mech\npkey=/tls/tls.key\ncert=/tls/tls.crt\n"` | configuration for turnserver.conf |

@@ -27,13 +27,14 @@ ports:
 certificate:
   # -- Enables auto issuing certificates over cert-manager certificates
   # https://cert-manager.io/docs/concepts/certificate/
-  enabled: true
+  enabled: false
   # -- REPLACE ME - hostname for ssl cert
   host: "turn.example.com"
   # -- name of secret to create for ssl cert
   secret: "turn-tls"
-  # -- name of cert-manager issuer to use for cert generation
-  issuerName: "letsencrypt"
+  # -- name of cert-manager issuer to use for cert generation.
+  # change to production issuer when you're stable
+  issuerName: "letsencrypt-staging"
 
 config:
   auth:
