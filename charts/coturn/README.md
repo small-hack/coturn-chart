@@ -1,6 +1,6 @@
 # coturn
 
-![Version: 3.0.0](https://img.shields.io/badge/Version-3.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.6.2](https://img.shields.io/badge/AppVersion-4.6.2-informational?style=flat-square)
+![Version: 3.0.1](https://img.shields.io/badge/Version-3.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.6.2](https://img.shields.io/badge/AppVersion-4.6.2-informational?style=flat-square)
 
 A Helm chart to deploy coturn
 
@@ -13,7 +13,7 @@ A Helm chart to deploy coturn
 | certificate.issuerName | string | `"letsencrypt"` | name of cert-manager issuer to use for cert generation |
 | certificate.secret | string | `"turn-tls"` | name of secret to create for ssl cert |
 | config.auth.existingSecret | string | `""` | not working: existing secret with keys username/password for coturn |
-| config.turnserver | string | `"realm={{ .Values.certificate.host }}\nlistening-ip=0.0.0.0\nlistening-port={{ .Values.ports.listening }}\ntls-listening-port={{ .Values.ports.tlsListening }}\nmin-port={{ .Values.ports.min }}\nmax-port={{ .Values.ports.max }}\nlog-file=stdout\nverbose\npidfile=/var/tmp/turnserver.pid\nlt-cred-mech\npkey=/tls/tls.key\ncert=/tls/tls.crt\n"` |  |
+| config.turnserver | string | `"realm={{ .Values.certificate.host }}\nlistening-ip=0.0.0.0\nlistening-port={{ .Values.ports.listening }}\ntls-listening-port={{ .Values.ports.tlsListening }}\nmin-port={{ .Values.ports.min }}\nmax-port={{ .Values.ports.max }}\nlog-file=stdout\nverbose\npidfile=/var/tmp/turnserver.pid\nlt-cred-mech\npkey=/tls/tls.key\ncert=/tls/tls.crt\n"` | configuration for turnserver.conf |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"coturn/coturn"` | container registry and repo for coturn docker image |
 | image.tag | string | `"{{ .Chart.AppVersion }}"` | docker tag for coturn server |

@@ -38,6 +38,7 @@ config:
   auth:
     # -- not working: existing secret with keys username/password for coturn
     existingSecret: ""
+  # -- configuration for turnserver.conf
   turnserver: |
     realm={{ .Values.certificate.host }}
     listening-ip=0.0.0.0
