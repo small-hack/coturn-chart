@@ -1,51 +1,43 @@
-# imagePullSecrets:
 replicas: 2
-# REPLACE ME
-elbId:
+
 service:
   externalTrafficPolicy: Local
-  annotations:
-    kubernetes.io/elb.id: "{{ .Values.elbId }}"
-    kubernetes.io/elb.health-check-flag: "off"
+
 image:
-  repository: "instrumentisto/coturn"
-  tag: "4.5.1.3"
+  # -- container registry and repo for coturn docker image
+  repository: "coturn/coturn"
+  # -- docker tag for coturn server
+  tag: "{{ .Chart.AppVersion }}"
   pullPolicy: IfNotPresent
-replicaCount: 1
+
 resources: { }
-# Coturn specific labels
+
+# -- Coturn specific labels
 labels:
   component: coturn
+
+# -- ports for coturn
 ports:
   min: 49152
   max: 65535
   listening: 3478
   tlsListening: 5349
 
-#Enable auto issuing certificates over cert-manager certificates https://cert-manager.io/docs/concepts/certificate/
 certificate:
+  # -- Enables auto issuing certificates over cert-manager certificates
+  # https://cert-manager.io/docs/concepts/certificate/
   enabled: true
-  # REPLACE ME
-  host:
+  # -- REPLACE ME - hostname for ssl cert
+  host: "turn.example.com"
+  # -- name of secret to create for ssl cert
   secret: "turn-tls"
+  # -- name of cert-manager issuer to use for cert generation
   issuerName: "letsencrypt"
 
 config:
   auth:
-    username: "turnUser"
-    # REPLACE ME
-    password:
-  externalDatabase:
-    #REPLACE ME IF NEEDED
-    user: ""
-    #REPLACE ME IF NEEDED
-    host: ""
-    #REPLACE ME IF NEEDED
-    database: ""
-    #REPLACE ME IF NEEDED
-    port: ""
-    #REPLACE ME IF NEEDED
-    password: ""
+    # -- not working: existing secret with keys username/password for coturn
+    existingSecret: ""
   turnserver: |
     realm={{ .Values.certificate.host }}
     listening-ip=0.0.0.0
@@ -57,7 +49,5 @@ config:
     verbose
     pidfile=/var/tmp/turnserver.pid
     lt-cred-mech
-    user={{ .Values.config.auth.username }}:{{ .Values.config.auth.password }}
     pkey=/tls/tls.key
     cert=/tls/tls.crt
-    psql-userdb="host={{ .Values.config.externalDatabase.host }} port={{ .Values.config.externalDatabase.port }} dbname={{ .Values.config.externalDatabase.database }} user={{ .Values.config.externalDatabase.user }} password={{ .Values.config.externalDatabase.password }} connect_timeout=30"
