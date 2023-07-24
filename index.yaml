@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  coturn:
+  - apiVersion: v2
+    appVersion: 4.6.2
+    created: "2023-07-24T12:18:17.09879521Z"
+    description: A Helm chart to deploy coturn
+    digest: 53093a3e567f78fbd5078ae1c3e353da1b6055100c6ce3641888397a20a84cd1
+    name: coturn
+    type: application
+    urls:
+    - https://github.com/jessebot/coturn-chart/releases/download/coturn-3.0.2/coturn-3.0.2.tgz
+    version: 3.0.2
+generated: "2023-07-24T12:18:17.09880141Z"
