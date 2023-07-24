@@ -4,35 +4,27 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - README.md
+      - ".github/**"
 
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: Configure Git
-        run: |
-          git config user.name "$GITHUB_ACTOR"
-          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-
       - name: Install Helm
         uses: azure/setup-helm@v1.1
-        with:
-          version: v3.4.0
 
       - name: Lint chart
         run: helm lint charts/* --strict
 
-#      - name: Validate Kubernetes YAML files with Kubeval
-#        run: |
-#          helm plugin install https://github.com/instrumenta/helm-kubeval
-#          helm kubeval charts/*
-
       - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.2.1
+        uses: helm/chart-releaser-action@v3.5
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          CR_GENERATE_RELEASE_NOTES: true
