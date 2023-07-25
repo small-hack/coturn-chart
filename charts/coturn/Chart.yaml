@@ -1,6 +1,15 @@
 apiVersion: v2
 name: coturn
-description: A Helm chart to deploy coturn
 type: application
+description: A Helm chart to deploy coturn
+home: "https://github.com/jessebot/coturn-chart"
+sources:
+  - "https://github.com/jessebot/coturn-chart"
+  
 version: 3.0.4
 appVersion: 4.6.2
+
+maintainers:
+  - name: "jessebot"
+    email: "jessebot@linux.com"
+    url: "https://github.com/jessebot/"
