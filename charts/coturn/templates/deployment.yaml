@@ -28,7 +28,7 @@ spec:
         runAsGroup: 1000
       containers:
         - name: "coturn"
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: {{ include "coturn.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args: ["-c", "/turnserver.conf"]
           ports:

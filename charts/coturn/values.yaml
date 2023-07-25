@@ -7,7 +7,7 @@ image:
   # -- container registry and repo for coturn docker image
   repository: "coturn/coturn"
   # -- docker tag for coturn server
-  tag: "{{ .Chart.AppVersion }}"
+  tag: ""
   # -- image pull policy, set to Always if using image.tag: latest
   pullPolicy: IfNotPresent
 

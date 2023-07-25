@@ -16,7 +16,7 @@ A Helm chart to deploy coturn
 | config.turnserver | string | `"realm={{ .Values.certificate.host }}\nlistening-ip=0.0.0.0\nlistening-port={{ .Values.ports.listening }}\ntls-listening-port={{ .Values.ports.tlsListening }}\nmin-port={{ .Values.ports.min }}\nmax-port={{ .Values.ports.max }}\nlog-file=stdout\nverbose\npidfile=/var/tmp/turnserver.pid\nlt-cred-mech\npkey=/tls/tls.key\ncert=/tls/tls.crt\n"` | configuration for turnserver.conf |
 | image.pullPolicy | string | `"IfNotPresent"` | image pull policy, set to Always if using image.tag: latest |
 | image.repository | string | `"coturn/coturn"` | container registry and repo for coturn docker image |
-| image.tag | string | `"{{ .Chart.AppVersion }}"` | docker tag for coturn server |
+| image.tag | string | `""` | docker tag for coturn server |
 | labels | object | `{"component":"coturn"}` | Coturn specific labels |
 | ports | object | `{"listening":3478,"max":65535,"min":49152,"tlsListening":5349}` | ports for coturn |
 | replicas | int | `2` |  |

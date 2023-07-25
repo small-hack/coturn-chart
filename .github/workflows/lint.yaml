@@ -3,7 +3,7 @@ name: Lint Charts
 on:
   push:
     branches:
-      - '*'
+      - '!main'
 
 jobs:
   lint:
