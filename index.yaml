@@ -3,6 +3,23 @@ entries:
   coturn:
   - apiVersion: v2
     appVersion: 4.6.2
+    created: "2023-07-25T09:52:34.080702063Z"
+    description: A Helm chart to deploy coturn
+    digest: 08a825116488546e5934d46e265da3f879e6103256c6da07223e7bea788f5236
+    home: https://github.com/jessebot/coturn-chart
+    maintainers:
+    - email: jessebot@linux.com
+      name: jessebot
+      url: https://github.com/jessebot/
+    name: coturn
+    sources:
+    - https://github.com/jessebot/coturn-chart
+    type: application
+    urls:
+    - https://github.com/jessebot/coturn-chart/releases/download/coturn-3.0.4/coturn-3.0.4.tgz
+    version: 3.0.4
+  - apiVersion: v2
+    appVersion: 4.6.2
     created: "2023-07-24T19:02:40.938560914Z"
     description: A Helm chart to deploy coturn
     digest: 1940e1bf4c7c88998939c586be65760433c9e9fa5affdac52c2ac3f467e2dbae
@@ -21,4 +38,4 @@ entries:
     urls:
     - https://github.com/jessebot/coturn-chart/releases/download/coturn-3.0.2/coturn-3.0.2.tgz
     version: 3.0.2
-generated: "2023-07-24T19:02:40.938573815Z"
+generated: "2023-07-25T09:52:34.080717863Z"
