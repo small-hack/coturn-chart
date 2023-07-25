@@ -6,7 +6,7 @@ home: "https://github.com/jessebot/coturn-chart"
 sources:
   - "https://github.com/jessebot/coturn-chart"
   
-version: 3.0.4
+version: 3.0.5
 appVersion: 4.6.2
 
 maintainers:
