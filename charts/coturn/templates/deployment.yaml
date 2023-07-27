@@ -12,9 +12,6 @@ spec:
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
-      annotations:
-        # re-roll deployment on config change
-        checksum/{{ .Release.Name }}-config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
       labels:
         app.kubernetes.io/name: {{ .Release.Name }}-coturn
         app.kubernetes.io/instance: {{ .Release.Name }}
@@ -24,8 +21,103 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
+        runAsUser: {{ .Values.securityContext.runAsUser }}
+        runAsGroup: {{ .Values.securityContext.runAsGroup }}
+        fsGroup: {{ .Values.securityContext.fsGroup }}
+      initContainers:
+        {{- if .Values.postgresql.enabled }}
+        - name: postgresql-isready
+          image: {{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "database.secretName" . }}
+                  key: {{ .Values.postgresql.global.postgresql.auth.secretKeys.username }}
+          command:
+            - "sh"
+            - "-c"
+            - {{ printf "until pg_isready -h %s-postgresql -U ${POSTGRES_USER} ; do sleep 2 ; done" .Release.Name }}
+        {{- end }}
+        - name: add-secret-values-to-config
+          image: "mikefarah/yq:latest"
+          imagePullPolicy: Always
+          env:
+            - name: USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "coturn.auth.secretName" . }}
+                  key: {{ .Values.coturn.auth.secretKeys.username }}
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "coturn.auth.secretName" . }}
+                  key: {{ .Values.coturn.auth.secretKeys.password }}
+            {{- if or .Values.externalDatabase.enabled .Values.postgresql.enabled }}
+            - name: DATABASE_HOSTNAME
+              {{- if .Values.postgresql.enabled }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "database.secretName" . }}
+                  key: {{ .Values.postgresql.global.postgresql.auth.secretKeys.hostname }}
+              {{ else }}
+              value: {{ template "postgresql.primary.fullname" .Subcharts.postgresql }}
+              {{- end }}
+              {{- if .Values.externalDatabase.enabled }}
+                secretKeyRef:
+                  name: {{ include "database.secretName" . }}
+                  key: {{ .Values.externalDatabase.secretKeys.hostname }}
+              {{- end }}
+            - name: DATABASE_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "database.secretName" . }}
+                  {{- if .Values.externalDatabase.enabled }}
+                  {{- if .Values.externalDatabase.secretKeys.username }}
+                  key: {{ .Values.externalDatabase.secretKeys.username }}
+                  {{ else }}
+                  key: {{ .Values.postgresql.global.postgresql.auth.secretKeys.username }}
+                  {{- end }}
+                  {{- end }}
+            - name: DATABASE_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "database.secretName" . }}
+                  {{- if .Values.externalDatabase.enabled }}
+                  {{- if .Values.externalDatabase.secretKeys.password }}
+                  key: {{ .Values.externalDatabase.secretKeys.password }}
+                  {{ else }}
+                  key: {{ .Values.postgresql.global.postgresql.auth.secretKeys.userPasswordKey }}
+                  {{- end }}
+                  {{- end }}
+            - name: DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "database.secretName" . }}
+                  {{- if .Values.externalDatabase.enabled }}
+                  {{- if .Values.externalDatabase.secretKeys.database }}
+                  key: {{ .Values.externalDatabase.secretKeys.database }}
+                  {{ else }}
+                  key: {{ .Values.postgresql.global.postgresql.auth.secretKeys.database }}
+                  {{- end }}
+                  {{- end }}
+            {{- end }}
+          command:
+            - /bin/sh
+            - -ec
+            - |
+              cp /initial/turnserver.conf /data/ && \
+              yq eval -i '.psql-db = "host=env(DATABASE_HOSTNAME) dbname=env(DATABASE) user=env(DATABASE_USER) password=env(DATABASE_PASS) connect_timeout=30' /data/turnserver.conf && \
+              yq eval -i '.user = env(USERNAME):env(PASSWORD)' /data/turnserver.conf && \
+              sed -i 's/: /=/' /data/turnserver.conf && \
+              cat /extra/turnserver.conf >> /data/turnserver.conf
+          volumeMounts:
+            - name: {{ .Release.Name }}-initial-config
+              mountPath: /initial
+            - name: {{ .Release.Name }}-extra-config
+              mountPath: /extra
+            - name: {{ .Release.Name }}-config
+              mountPath: /data
       containers:
         - name: "coturn"
           image: {{ include "coturn.image" . }}
@@ -33,16 +125,16 @@ spec:
           args: ["-c", "/turnserver.conf"]
           ports:
             - name: turn-udp
-              containerPort: {{ .Values.ports.listening }}
+              containerPort: {{ .Values.coturn.ports.listening }}
               protocol: UDP
             - name: turn-tcp
-              containerPort: {{ .Values.ports.listening }}
+              containerPort: {{ .Values.coturn.ports.listening }}
               protocol: TCP
             - name: turn-tcp-tls
-              containerPort: {{ .Values.ports.tlsListening }}
+              containerPort: {{ .Values.coturn.ports.tlsListening }}
               protocol: TCP
             - name: turn-udp-dtls
-              containerPort: {{ .Values.ports.tlsListening }}
+              containerPort: {{ .Values.coturn.ports.tlsListening }}
               protocol: UDP
           volumeMounts:
             - name: {{ .Release.Name }}-config
@@ -68,8 +160,18 @@ spec:
         - name: tls
           secret:
             secretName: {{ .Values.certificate.secret }}
+        - name: {{ .Release.Name }}-initial-config
+          configMap:
+            name: {{ .Release.Name }}-initial-config
+        - name: {{ .Release.Name }}-extra-config
+          configMap:
+            name: {{ .Release.Name }}-extra-config
         - name: {{ .Release.Name }}-config
-          secret:
-            secretName: {{ .Release.Name }}-config
+          persistentVolumeClaim:
+            {{- if .Values.persistence.existingClaim }}
+            claimName: {{ .Values.persistence.existingClaim }}
+            {{ else }}
+            claimName: {{ .Release.Name }}-config
+            {{- end }}
         - name: var-tmp
           emptyDir: {}

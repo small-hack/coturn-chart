@@ -8,7 +8,7 @@ spec:
   issuerRef:
     name: {{.Values.certificate.issuerName}}
     kind: ClusterIssuer
-  commonName: {{ .Values.certificate.host | quote }}
+  commonName: {{ .Values.coturn.realm | quote }}
   privateKey:
     algorithm: "RSA"
     size: 4096
