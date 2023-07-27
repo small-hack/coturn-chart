@@ -41,7 +41,7 @@ spec:
           command:
             - "sh"
             - "-c"
-            - {{ printf "until pg_isready -U ${POSTGRES_USER} ; do sleep 2 ; done" }}
+            - "until pg_isready -U $POSTGRES_USER ; do sleep 2 ; done"
         {{- end }}
         - name: add-secret-values-to-config
           image: "mikefarah/yq:latest"
