@@ -5,8 +5,10 @@ on:
     branches:
       - main
     paths-ignore:
-      - README.md
-      - ".github/**"
+      - '.github/**'
+      - 'LICENSE'
+      - 'README.md'
+      - 'CONTRIBUTING.md'
 
 jobs:
   release:

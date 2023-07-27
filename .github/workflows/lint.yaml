@@ -6,6 +6,7 @@ on:
       - '.github/**'
       - 'LICENSE'
       - 'README.md'
+      - 'CONTRIBUTING.md'
 
 jobs:
   lint:
