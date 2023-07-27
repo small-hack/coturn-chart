@@ -51,13 +51,13 @@ externalDatabase:
   # Names of the keys in existing secret to use for PostgreSQL credentials
   secretKeys:
     # -- key in existing Secret to use for the db user
-    username: ""
+    username: "username"
     # -- key in existing Secret to use for db user's password
-    password: ""
+    password: "password"
     # -- key in existing Secret to use for the database name
-    database: ""
+    database: "database"
     # -- key in existing Secret to use for the db's hostname
-    hostname: ""
+    hostname: "hostname"
 
 # PostgreSQL chart configuration
 # see: https://github.com/bitnami/charts/tree/main/bitnami/postgresql
@@ -77,15 +77,18 @@ postgresql:
         # -- name of existing Secret to use for postgresql credentials
         existingSecret: ""
         # Names of the keys in existing secret to use for PostgreSQL credentials
+        # all of these are ignored if existingSecret is empty
         secretKeys:
           # -- key in existingSecret for database to create
-          database: ""
+          hostname: "hostname"
+          # -- key in existingSecret for database to create
+          database: "database"
           # -- key in exsiting Secret to use for the coturn user
-          username: ""
+          username: "username"
           # -- key in existing Secret to use for postgres admin user's password
-          adminPasswordKey: ""
+          adminPasswordKey: "postgresPassword"
           # -- key in existing Secret to use for coturn user's password
-          userPasswordKey: ""
+          userPasswordKey: "password"
 
 persistence:
   # -- existing PVC to use instead of creating one on the fly
