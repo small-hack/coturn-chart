@@ -27,7 +27,7 @@ spec:
       initContainers:
         {{- if .Values.postgresql.enabled }}
         - name: postgresql-isready
-          image: {{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}
+          image: "{{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}"
           env:
             - name: POSTGRES_USER
               valueFrom:
@@ -55,51 +55,40 @@ spec:
                   key: {{ .Values.coturn.auth.secretKeys.password }}
             {{- if or .Values.externalDatabase.enabled .Values.postgresql.enabled }}
             - name: DATABASE_HOSTNAME
-              {{- if .Values.postgresql.enabled }}
               valueFrom:
                 secretKeyRef:
                   name: {{ include "database.secretName" . }}
-                  key: {{ .Values.postgresql.global.postgresql.auth.secretKeys.hostname }}
-              {{ else }}
-              value: {{ template "postgresql.primary.fullname" .Subcharts.postgresql }}
-              {{- end }}
-              {{- if .Values.externalDatabase.enabled }}
-                secretKeyRef:
-                  name: {{ include "database.secretName" . }}
-                  key: {{ .Values.externalDatabase.secretKeys.hostname }}
-              {{- end }}
+                  {{- if and .Values.externalDatabase.enabled .Values.externalDatabase.secretKeys.hostname }}
+                  key: {{ .Values.externalDatabase.secretKeys.username }}
+                  {{ else }}
+                  key: hostname
+                  {{- end }}
             - name: DATABASE_USER
               valueFrom:
                 secretKeyRef:
                   name: {{ include "database.secretName" . }}
-                  {{- if .Values.externalDatabase.enabled }}
-                  {{- if .Values.externalDatabase.secretKeys.username }}
+                  {{- if and .Values.externalDatabase.enabled .Values.externalDatabase.secretKeys.username }}
                   key: {{ .Values.externalDatabase.secretKeys.username }}
                   {{ else }}
                   key: {{ .Values.postgresql.global.postgresql.auth.secretKeys.username }}
-                  {{- end }}
                   {{- end }}
             - name: DATABASE_PASS
               valueFrom:
                 secretKeyRef:
                   name: {{ include "database.secretName" . }}
-                  {{- if .Values.externalDatabase.enabled }}
-                  {{- if .Values.externalDatabase.secretKeys.password }}
+                  {{- if and .Values.externalDatabase.enabled .Values.externalDatabase.secretKeys.password }}
                   key: {{ .Values.externalDatabase.secretKeys.password }}
                   {{ else }}
                   key: {{ .Values.postgresql.global.postgresql.auth.secretKeys.userPasswordKey }}
-                  {{- end }}
                   {{- end }}
             - name: DATABASE
               valueFrom:
                 secretKeyRef:
                   name: {{ include "database.secretName" . }}
-                  {{- if .Values.externalDatabase.enabled }}
-                  {{- if .Values.externalDatabase.secretKeys.database }}
+                  {{- if and .Values.externalDatabase.enabled .Values.externalDatabase.secretKeys.database }}
                   key: {{ .Values.externalDatabase.secretKeys.database }}
                   {{ else }}
                   key: {{ .Values.postgresql.global.postgresql.auth.secretKeys.database }}
-                  {{- end }}
                   {{- end }}
             {{- end }}
           command:
@@ -110,7 +99,8 @@ spec:
               yq eval -i '.psql-db = "host=env(DATABASE_HOSTNAME) dbname=env(DATABASE) user=env(DATABASE_USER) password=env(DATABASE_PASS) connect_timeout=30' /data/turnserver.conf && \
               yq eval -i '.user = env(USERNAME):env(PASSWORD)' /data/turnserver.conf && \
               sed -i 's/: /=/' /data/turnserver.conf && \
-              cat /extra/turnserver.conf >> /data/turnserver.conf
+              cat /extra/turnserver.conf >> /data/turnserver.conf && \
+              echo "lt-cred-mech" >> /data/turnserver.conf
           volumeMounts:
             - name: {{ .Release.Name }}-initial-config
               mountPath: /initial

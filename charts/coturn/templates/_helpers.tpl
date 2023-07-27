@@ -35,10 +35,10 @@ Helper function to get the coturn secret containing db credentials
 {{ .Values.externalDatabase.existingSecret }}
 {{- else if .Values.postgresql.global.postgresql.auth.existingSecret -}}
 {{ .Values.postgresql.global.postgresql.auth.existingSecret }}
-{{- else }}
+{{- else -}}
 {{ .Release.Name }}-db-secret
-{{- end }}
-{{- end }}
+{{- end -}}
+{{- end -}}
 
 {{/*
 Helper function to get the coturn secret containing admin coturn credentials
