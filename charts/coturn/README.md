@@ -31,8 +31,8 @@ A Helm chart to deploy coturn
 | certificate.secret | string | `"turn-tls"` | name of secret to create for ssl cert |
 | coturn.auth.existingSecret | string | `""` | existing secret with keys username/password for coturn |
 | coturn.auth.password | string | `""` | password for the main user of the turn server |
-| coturn.auth.secretKeys.passwordKey | string | `"password"` | key in existing secret for turn server user's password |
-| coturn.auth.secretKeys.usernameKey | string | `"username"` | key in existing secret for turn server user |
+| coturn.auth.secretKeys.password | string | `"password"` | key in existing secret for turn server user's password |
+| coturn.auth.secretKeys.username | string | `"username"` | key in existing secret for turn server user |
 | coturn.auth.username | string | `""` | username for the main user of the turn server |
 | coturn.extraTurnserverConfiguration | string | `"verbose\n"` | extra configuration for turnserver.conf |
 | coturn.listeningIP | string | `"0.0.0.0"` | coturn's listening IP address |

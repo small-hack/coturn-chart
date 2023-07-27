@@ -116,9 +116,9 @@ coturn:
     existingSecret: ""
     secretKeys:
       # -- key in existing secret for turn server user
-      usernameKey: username
+      username: username
       # -- key in existing secret for turn server user's password
-      passwordKey: password
+      password: password
 
   # -- coturn's listening IP address
   listeningIP: "0.0.0.0"
