@@ -34,10 +34,19 @@ spec:
                 secretKeyRef:
                   name: {{ include "database.secretName" . }}
                   key: {{ .Values.postgresql.global.postgresql.auth.secretKeys.username }}
+            - name: DATABASE_HOSTNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "database.secretName" . }}
+                  {{- if and .Values.externalDatabase.enabled .Values.externalDatabase.secretKeys.hostname }}
+                  key: {{ .Values.externalDatabase.secretKeys.hostname }}
+                  {{ else }}
+                  key: hostname
+                  {{- end }}
           command:
             - "sh"
             - "-c"
-            - {{ printf "until pg_isready -h %s-postgresql -U ${POSTGRES_USER} ; do sleep 2 ; done" .Release.Name }}
+            - {{ printf "until pg_isready -h ${DATABASE_HOSTNAME} -U ${POSTGRES_USER} ; do sleep 2 ; done" }}
         {{- end }}
         - name: add-secret-values-to-config
           image: "mikefarah/yq:latest"
@@ -59,7 +68,7 @@ spec:
                 secretKeyRef:
                   name: {{ include "database.secretName" . }}
                   {{- if and .Values.externalDatabase.enabled .Values.externalDatabase.secretKeys.hostname }}
-                  key: {{ .Values.externalDatabase.secretKeys.username }}
+                  key: {{ .Values.externalDatabase.secretKeys.hostname }}
                   {{ else }}
                   key: hostname
                   {{- end }}
