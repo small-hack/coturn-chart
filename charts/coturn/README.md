@@ -35,8 +35,8 @@ A Helm chart to deploy coturn
 | coturn.auth.secretKeys.usernameKey | string | `"username"` | key in existing secret for turn server user |
 | coturn.auth.username | string | `""` | username for the main user of the turn server |
 | coturn.extraTurnserverConfiguration | string | `"verbose\n"` | extra configuration for turnserver.conf |
-| coturn.listeningIP | string | `"0.0.0.0"` |  |
-| coturn.logFile | string | `"stdout"` |  |
+| coturn.listeningIP | string | `"0.0.0.0"` | coturn's listening IP address |
+| coturn.logFile | string | `"stdout"` | set the logfile. Defaults to stdout for use with kubectl logs |
 | coturn.ports.listening | int | `3478` | insecure listening port |
 | coturn.ports.max | int | `65535` | maximum ephemeral port for coturn |
 | coturn.ports.min | int | `49152` | minimum ephemeral port for coturn |
@@ -59,7 +59,7 @@ A Helm chart to deploy coturn
 | labels | object | `{"component":"coturn"}` | Coturn specific labels |
 | nameOverride | string | `""` | different name for the helm release |
 | persistence.accessMode | string | `"ReadWriteOnce"` | access mode for the PVC, ignored if persistence.existingClaim passed in |
-| persistence.annotations | string | `""` | annotations for the PVC, ignored if persistence.existingClaim passed in |
+| persistence.annotations | object | `{}` | annotations for the PVC, ignored if persistence.existingClaim passed in |
 | persistence.existingClaim | string | `""` | existing PVC to use instead of creating one on the fly |
 | persistence.size | string | `"1Mi"` | size of the PVC, ignored if persistence.existingClaim passed in |
 | persistence.storageClass | string | `""` | storageClass for the PVC, ignored if persistence.existingClaim passed in |

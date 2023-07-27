@@ -96,8 +96,10 @@ spec:
             - -ec
             - |
               cp /initial/turnserver.conf /data/ && \
-              yq eval -i '.psql-db = "host=env(DATABASE_HOSTNAME) dbname=env(DATABASE) user=env(DATABASE_USER) password=env(DATABASE_PASS) connect_timeout=30' /data/turnserver.conf && \
               yq eval -i '.user = env(USERNAME):env(PASSWORD)' /data/turnserver.conf && \
+              {{- if or .Values.externalDatabase.enabled .Values.postgresql.enabled }}
+              yq eval -i '.psql-db = "host=env(DATABASE_HOSTNAME) dbname=env(DATABASE) user=env(DATABASE_USER) password=env(DATABASE_PASS) connect_timeout=30' /data/turnserver.conf && \
+              {{- end }}
               sed -i 's/: /=/' /data/turnserver.conf && \
               cat /extra/turnserver.conf >> /data/turnserver.conf && \
               echo "lt-cred-mech" >> /data/turnserver.conf

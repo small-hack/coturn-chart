@@ -91,7 +91,7 @@ persistence:
   # -- existing PVC to use instead of creating one on the fly
   existingClaim: ""
   # -- annotations for the PVC, ignored if persistence.existingClaim passed in
-  annotations: ""
+  annotations: {}
   # -- access mode for the PVC, ignored if persistence.existingClaim passed in
   accessMode: "ReadWriteOnce"
   # -- size of the PVC, ignored if persistence.existingClaim passed in
@@ -117,6 +117,7 @@ coturn:
       # -- key in existing secret for turn server user's password
       passwordKey: password
 
+  # -- coturn's listening IP address
   listeningIP: "0.0.0.0"
 
   ports:
@@ -129,6 +130,7 @@ coturn:
     # -- secure listening port
     tlsListening: 5349
 
+  # -- set the logfile. Defaults to stdout for use with kubectl logs
   logFile: "stdout"
 
   # -- extra configuration for turnserver.conf
