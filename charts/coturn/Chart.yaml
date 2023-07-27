@@ -3,11 +3,10 @@ name: coturn
 type: application
 description: A Helm chart to deploy coturn
 home: "https://github.com/jessebot/coturn-chart"
-sources:
-  - "https://github.com/jessebot/coturn-chart"
-  
 version: 4.0.0
 appVersion: 4.6.2
+sources:
+  - "https://github.com/jessebot/coturn-chart"
 
 maintainers:
   - name: "jessebot"
