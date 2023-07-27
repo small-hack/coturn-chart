@@ -33,7 +33,11 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ include "database.secretName" . }}
+                  {{- if and .Values.externalDatabase.enabled .Values.externalDatabase.secretKeys.username }}
+                  key: {{ .Values.externalDatabase.secretKeys.username }}
+                  {{ else }}
                   key: {{ .Values.postgresql.global.postgresql.auth.secretKeys.username }}
+                  {{- end }}
           command:
             - "sh"
             - "-c"
