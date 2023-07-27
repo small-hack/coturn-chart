@@ -16,6 +16,6 @@ data:
   pidfile: "/var/tmp/turnserver.pid"
   pkey: "/tls/tls.key"
   cert: "/tls/tls.crt"
-  {{- if or (not .Values.externalDatabase.enabled) (not .Values.postgresql.enabled) }}
+  {{- if and (not .Values.externalDatabase.enabled) (not .Values.postgresql.enabled) }}
   userdb: "/var/db/turndb"
   {{- end }}
