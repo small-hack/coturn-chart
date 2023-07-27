@@ -106,6 +106,8 @@ spec:
           volumeMounts:
             - name: {{ .Release.Name }}-initial-config
               mountPath: /initial
+              subPath: turnserver.conf
+              readOnly: true
             - name: {{ .Release.Name }}-extra-config
               mountPath: /extra
             - name: {{ .Release.Name }}-config
