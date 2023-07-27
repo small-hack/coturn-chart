@@ -27,7 +27,7 @@ spec:
       initContainers:
         {{- if .Values.postgresql.enabled }}
         - name: postgresql-isready
-          image: "{{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}"
+          image: {{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}
           env:
             - name: POSTGRES_USER
               valueFrom:
@@ -133,9 +133,11 @@ spec:
               mountPath: /turnserver.conf
               subPath: turnserver.conf
               readOnly: true
+            {{- if .Values.certificate.enabled }}
             - name: tls
               mountPath: /tls
               readOnly: true
+            {{- end }}
             - name: var-tmp
               mountPath: /var/tmp
           securityContext:
@@ -149,9 +151,11 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
       volumes:
+        {{- if .Values.certificate.enabled }}
         - name: tls
           secret:
             secretName: {{ .Values.certificate.secret }}
+        {{- end }}
         - name: {{ .Release.Name }}-initial-config
           configMap:
             name: {{ .Release.Name }}-initial-config
