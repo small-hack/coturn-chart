@@ -118,9 +118,7 @@ spec:
               echo "lt-cred-mech" >> /data/turnserver.conf
           volumeMounts:
             - name: {{ .Release.Name }}-initial-config
-              mountPath: /initial
-              subPath: turnserver.conf
-              readOnly: true
+              mountPath: "/initial"
             - name: {{ .Release.Name }}-extra-config
               mountPath: /extra
             - name: {{ .Release.Name }}-config
@@ -145,7 +143,7 @@ spec:
               protocol: UDP
           volumeMounts:
             - name: {{ .Release.Name }}-config
-              mountPath: /turnserver.conf
+              mountPath: "/turnserver.conf"
               subPath: turnserver.conf
               readOnly: true
             {{- if .Values.certificate.enabled }}
