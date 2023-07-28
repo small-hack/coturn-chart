@@ -38,10 +38,19 @@ spec:
                   {{ else }}
                   key: {{ .Values.postgresql.global.postgresql.auth.secretKeys.username }}
                   {{- end }}
+            - name: DATABASE_HOSTNAME
+            {{- if and .Values.externalDatabase.enabled .Values.externalDatabase.secretKeys.hostname }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "database.secretName" . }}
+                  key: {{ .Values.externalDatabase.secretKeys.hostname }}
+            {{ else }}
+              value: {{ template "postgresql.primary.fullname" .Subcharts.postgresql }}
+            {{- end }}
           command:
             - "sh"
             - "-c"
-            - "until pg_isready -U $POSTGRES_USER ; do sleep 2 ; done"
+            - "until pg_isready -h $DATABASE_HOSTNAME -U $POSTGRES_USER ; do sleep 2 ; done"
         {{- end }}
         - name: add-secret-values-to-config
           image: "mikefarah/yq:latest"
@@ -59,14 +68,14 @@ spec:
                   key: {{ .Values.coturn.auth.secretKeys.password }}
             {{- if or .Values.externalDatabase.enabled .Values.postgresql.enabled }}
             - name: DATABASE_HOSTNAME
+            {{- if and .Values.externalDatabase.enabled .Values.externalDatabase.secretKeys.hostname }}
               valueFrom:
                 secretKeyRef:
                   name: {{ include "database.secretName" . }}
-                  {{- if and .Values.externalDatabase.enabled .Values.externalDatabase.secretKeys.hostname }}
                   key: {{ .Values.externalDatabase.secretKeys.hostname }}
-                  {{ else }}
-                  key: hostname
-                  {{- end }}
+            {{ else }}
+              value: {{ template "postgresql.primary.fullname" .Subcharts.postgresql }}
+            {{- end }}
             - name: DATABASE_USER
               valueFrom:
                 secretKeyRef:
