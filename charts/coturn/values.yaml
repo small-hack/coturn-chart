@@ -62,7 +62,7 @@ externalDatabase:
 # PostgreSQL chart configuration
 # see: https://github.com/bitnami/charts/tree/main/bitnami/postgresql
 postgresql:
-  # -- enables bitnami postgresql subchart, you can disable to use externalDatabase to pass in credentials to an existing database
+  # -- enables bitnami postgresql subchart, you can disable to use external db
   enabled: true
   global:
     postgresql:
