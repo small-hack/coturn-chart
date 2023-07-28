@@ -47,10 +47,10 @@ A Helm chart to deploy coturn
 | externalDatabase.existingSecret | string | `""` | name of existing Secret to use for postgresql credentials |
 | externalDatabase.hostname | string | `""` | required if externalDatabase.enabled: true and postgresql.enabled: false |
 | externalDatabase.password | string | `""` | password for database, ignored if existingSecret is passed in |
-| externalDatabase.secretKeys.database | string | `"database"` | key in existing Secret to use for the database name |
-| externalDatabase.secretKeys.hostname | string | `"hostname"` | key in existing Secret to use for the db's hostname |
-| externalDatabase.secretKeys.password | string | `"password"` | key in existing Secret to use for db user's password |
-| externalDatabase.secretKeys.username | string | `"username"` | key in existing Secret to use for the db user |
+| externalDatabase.secretKeys.database | string | `""` | key in existing Secret to use for the database name |
+| externalDatabase.secretKeys.hostname | string | `""` | key in existing Secret to use for the db's hostname |
+| externalDatabase.secretKeys.password | string | `""` | key in existing Secret to use for db user's password |
+| externalDatabase.secretKeys.username | string | `""` | key in existing Secret to use for the db user |
 | externalDatabase.type | string | `"postgresql"` | Currently only postgresql is supported. mysql coming soon |
 | externalDatabase.username | string | `""` | username for database, ignored if existingSecret is passed in |
 | image.pullPolicy | string | `"IfNotPresent"` | image pull policy, set to Always if using image.tag: latest |

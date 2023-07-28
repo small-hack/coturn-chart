@@ -51,13 +51,13 @@ externalDatabase:
   # Names of the keys in existing secret to use for PostgreSQL credentials
   secretKeys:
     # -- key in existing Secret to use for the db user
-    username: "username"
+    username: ""
     # -- key in existing Secret to use for db user's password
-    password: "password"
+    password: ""
     # -- key in existing Secret to use for the database name
-    database: "database"
+    database: ""
     # -- key in existing Secret to use for the db's hostname
-    hostname: "hostname"
+    hostname: ""
 
 # PostgreSQL chart configuration
 # see: https://github.com/bitnami/charts/tree/main/bitnami/postgresql
