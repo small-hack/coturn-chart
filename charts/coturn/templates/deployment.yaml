@@ -119,7 +119,7 @@ spec:
               yq eval -i '.user = env(USER_STR)' /data/turnserver.yaml && \
               export CONNECTION_STRING="host=$DATABASE_HOSTNAME dbname=$DATABASE user=$DATABASE_USER password=$DATABASE_PASS connect_timeout=30" && \
               {{- if or .Values.externalDatabase.enabled .Values.postgresql.enabled }}
-              yq eval '.psql-db = env(CONNECTION_STRING)' /data/turnserver.yaml && \
+              yq eval '.psql-userdb = env(CONNECTION_STRING)' /data/turnserver.yaml && \
               {{- end }}
               sed -i 's/: /=/' /data/turnserver.yaml && \
               cat /extra/turnserver.conf >> /data/turnserver.yaml && \
