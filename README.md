@@ -122,6 +122,42 @@ postgresql:
   enabled: false
 ```
 
+## Testing
+
+Source: [Tutorial for turnutils_uclient and Coturn server](https://gist.github.com/cameronelliott/be1e581cb7b28f748e04bcabc249e6b6)
+
+1. Install coturn:
+  
+    ```bash
+    brew install coturn
+    ```
+
+2. Test the connection to the server:
+  
+    ```bash
+    # example for LoadBalancer type services:
+    
+    turnutils_uclient -u $COTURN_USER -w $COTURN_PASSWORD \
+      -L $CLIENT_IP \
+      -y $SERVER_UDP_IP
+    ```
+
+    A Successful test looks like this:
+  
+    ```
+    0: (18446744073709551615): INFO: Total connect time is 0
+    1: (18446744073709551615): INFO: start_mclient: msz=4, tot_send_msgs=0, tot_recv_msgs=0, tot_send_bytes ~ 0, tot_recv_bytes ~ 0
+    2: (18446744073709551615): INFO: start_mclient: msz=4, tot_send_msgs=0, tot_recv_msgs=0, tot_send_bytes ~ 0, tot_recv_bytes ~ 0
+    3: (18446744073709551615): INFO: start_mclient: msz=4, tot_send_msgs=10, tot_recv_msgs=10, tot_send_bytes ~ 1000, tot_recv_bytes ~ 1000
+    4: (18446744073709551615): INFO: start_mclient: msz=1, tot_send_msgs=20, tot_recv_msgs=20, tot_send_bytes ~ 2000, tot_recv_bytes ~ 2000
+    4: (18446744073709551615): INFO: start_mclient: tot_send_msgs=20, tot_recv_msgs=20
+    4: (18446744073709551615): INFO: start_mclient: tot_send_bytes ~ 2000, tot_recv_bytes ~ 2000
+    4: (18446744073709551615): INFO: Total transmit time is 4
+    4: (18446744073709551615): INFO: Total lost packets 0 (0.000000%), total send dropped 0 (0.000000%)
+    4: (18446744073709551615): INFO: Average round trip delay 5.500000 ms; min = 4 ms, max = 13 ms
+    4: (18446744073709551615): INFO: Average jitter 1.700000 ms; min = 0 ms, max = 9 ms
+    ```
+
 ## Status and Contributing
 This is actively maintained by both live developer and [renovate](https://github.com/renovatebot/github-action) via a scheduled Github Action. If you'd like to contribute, please read the [CONTRIBUTING.md](./CONTRIBUTING.md) feel free to open a PR :) If you'd like a feature or want to report a bug, please do that in the GitHub Issues. If you know coturn and k8s well enough, please also feel free to scan the issues and help others <3
 
