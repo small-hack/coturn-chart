@@ -74,7 +74,7 @@ A Helm chart to deploy coturn
 | postgresql.global.postgresql.auth.secretKeys.userPasswordKey | string | `"password"` | key in existing Secret to use for coturn user's password |
 | postgresql.global.postgresql.auth.secretKeys.username | string | `"username"` | key in exsiting Secret to use for the coturn user |
 | postgresql.global.postgresql.auth.username | string | `"coturn"` | username for database, ignored if existingSecret is passed in |
-| replicas | int | `2` |  |
+| replicas | int | `1` |  |
 | resources | object | `{}` | ref: kubernetes.io/docs/concepts/configuration/manage-resources-containers |
 | securityContext.allowPrivilegeEscalation | bool | `true` | allow priviledged access |
 | securityContext.capabilities.add | list | `["NET_BIND_SERVICE"]` | linux cabilities to allow for the coturn k8s pod |

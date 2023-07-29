@@ -1,5 +1,5 @@
 ---
-replicas: 2
+replicas: 1
 
 # -- different name for the helm release
 nameOverride: ""
