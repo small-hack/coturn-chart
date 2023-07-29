@@ -162,12 +162,6 @@ spec:
             {{- end }}
             - name: var-tmp
               mountPath: /var/tmp
-          securityContext:
-            capabilities:
-              drop:
-                - ALL
-            readOnlyRootFilesystem: true
-            allowPrivilegeEscalation: false
           {{- with .Values.resources }}
           resources:
             {{- toYaml . | nindent 12 }}

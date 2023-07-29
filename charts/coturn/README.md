@@ -1,6 +1,6 @@
 # coturn
 
-![Version: 4.0.0](https://img.shields.io/badge/Version-4.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.6.2](https://img.shields.io/badge/AppVersion-4.6.2-informational?style=flat-square)
+![Version: 4.0.1](https://img.shields.io/badge/Version-4.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.6.2](https://img.shields.io/badge/AppVersion-4.6.2-informational?style=flat-square)
 
 A Helm chart to deploy coturn
 
@@ -43,7 +43,7 @@ A Helm chart to deploy coturn
 | coturn.ports.tlsListening | int | `5349` | secure listening port |
 | coturn.realm | string | `"turn.example.com"` | hostname for the coturn server realm |
 | externalDatabase.database | string | `""` | database to create, ignored if existingSecret is passed in |
-| externalDatabase.enabled | bool | `true` | enables the use of postgresql instead of the default sqlite |
+| externalDatabase.enabled | bool | `false` | enables the use of postgresql instead of the default sqlite to use the bundled subchart, enable this, and postgresql.enable |
 | externalDatabase.existingSecret | string | `""` | name of existing Secret to use for postgresql credentials |
 | externalDatabase.hostname | string | `""` | required if externalDatabase.enabled: true and postgresql.enabled: false |
 | externalDatabase.password | string | `""` | password for database, ignored if existingSecret is passed in |
@@ -63,7 +63,7 @@ A Helm chart to deploy coturn
 | persistence.existingClaim | string | `""` | existing PVC to use instead of creating one on the fly |
 | persistence.size | string | `"1Mi"` | size of the PVC, ignored if persistence.existingClaim passed in |
 | persistence.storageClass | string | `""` | storageClass for the PVC, ignored if persistence.existingClaim passed in |
-| postgresql.enabled | bool | `true` | enables bitnami postgresql subchart, you can disable to use external db |
+| postgresql.enabled | bool | `false` | enables bitnami postgresql subchart, you can disable to use external db |
 | postgresql.global.postgresql.auth | object | `{"database":"coturn","existingSecret":"","password":"","secretKeys":{"adminPasswordKey":"postgresPassword","database":"database","hostname":"hostname","userPasswordKey":"password","username":"username"},"username":"coturn"}` | global.postgresql.auth overrides postgresql.auth |
 | postgresql.global.postgresql.auth.database | string | `"coturn"` | database to create, ignored if existingSecret is passed in |
 | postgresql.global.postgresql.auth.existingSecret | string | `""` | name of existing Secret to use for postgresql credentials |
@@ -74,7 +74,7 @@ A Helm chart to deploy coturn
 | postgresql.global.postgresql.auth.secretKeys.userPasswordKey | string | `"password"` | key in existing Secret to use for coturn user's password |
 | postgresql.global.postgresql.auth.secretKeys.username | string | `"username"` | key in exsiting Secret to use for the coturn user |
 | postgresql.global.postgresql.auth.username | string | `"coturn"` | username for database, ignored if existingSecret is passed in |
-| replicas | int | `2` |  |
+| replicas | int | `1` |  |
 | resources | object | `{}` | ref: kubernetes.io/docs/concepts/configuration/manage-resources-containers |
 | securityContext.allowPrivilegeEscalation | bool | `true` | allow priviledged access |
 | securityContext.capabilities.add | list | `["NET_BIND_SERVICE"]` | linux cabilities to allow for the coturn k8s pod |
@@ -83,7 +83,8 @@ A Helm chart to deploy coturn
 | securityContext.readOnlyRootFilesystem | bool | `false` | allow modificatin to root filesystem |
 | securityContext.runAsGroup | int | `1000` | for all Containers in the Pod, all processes run w/ this GroupID |
 | securityContext.runAsUser | int | `1000` | for all Containers in the Pod, all processes run w/ this userID |
-| service.externalTrafficPolicy | string | `"Local"` | I don't actually know what this is 🤔 open a PR if you know |
+| service.externalTrafficPolicy | string | `""` | I don't actually know what this is 🤔 open a PR if you know    was originally "Local" |
+| service.type | string | `"ClusterIP"` | The type of service to deploy for routing Coturn traffic.   ClusterIP: Recommended for DaemonSet configurations. This will create a              standard Kubernetes service for Coturn within the cluster.              No external networking will be configured as the DaemonSet              will handle binding to each Node's host networking    NodePort:  Recommended for Deployment configurations. This will open              TURN ports on every node and route traffic on these ports to              the Coturn pods. You will need to make sure your cloud              provider supports the cluster config setting,              apiserver.service-node-port-range, as this range must contain              the ports defined above for the service to be created.    LoadBalancer: This was what was originally set for this chart in the                 upstream of this fork, but with no details |
 
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)
