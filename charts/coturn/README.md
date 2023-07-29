@@ -33,7 +33,7 @@ A Helm chart to deploy coturn
 | coturn.auth.password | string | `""` | password for the main user of the turn server |
 | coturn.auth.secretKeys.password | string | `"password"` | key in existing secret for turn server user's password |
 | coturn.auth.secretKeys.username | string | `"username"` | key in existing secret for turn server user |
-| coturn.auth.username | string | `""` | username for the main user of the turn server |
+| coturn.auth.username | string | `"coturn"` | username for the main user of the turn server |
 | coturn.extraTurnserverConfiguration | string | `"verbose\n"` | extra configuration for turnserver.conf |
 | coturn.listeningIP | string | `"0.0.0.0"` | coturn's listening IP address |
 | coturn.logFile | string | `"stdout"` | set the logfile. Defaults to stdout for use with kubectl logs |

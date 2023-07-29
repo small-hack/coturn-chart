@@ -109,7 +109,7 @@ coturn:
 
   auth:
     # -- username for the main user of the turn server
-    username: ""
+    username: "coturn"
     # -- password for the main user of the turn server
     password: ""
     # -- existing secret with keys username/password for coturn
