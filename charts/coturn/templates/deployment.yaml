@@ -21,9 +21,11 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       securityContext:
-        runAsUser: {{ .Values.securityContext.runAsUser }}
-        runAsGroup: {{ .Values.securityContext.runAsGroup }}
-        fsGroup: {{ .Values.securityContext.fsGroup }}
+        readOnlyRootFilesystem: {{ .Values.securityContext.readOnlyRootFilesystem }}
+        allowPrivilegeEscalation: {{ .Values.securityContext.allowPrivilegeEscalation }}
+        capabilities:
+          add: {{ .Values.securityContext.capabilities.add }}
+          drop: {{ .Values.securityContext.capabilities.drop }}
       initContainers:
         {{- if .Values.postgresql.enabled }}
         - name: postgresql-isready

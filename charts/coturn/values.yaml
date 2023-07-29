@@ -149,3 +149,12 @@ securityContext:
   runAsGroup: 1000
   # -- all processes of the container are also part of the supplementary groupID
   fsGroup: 1000
+  # -- allow modificatin to root filesystem
+  readOnlyRootFilesystem: false
+  # -- allow priviledged access
+  allowPrivilegeEscalation: true
+  capabilities:
+    # -- linux cabilities to allow for the coturn k8s pod
+    add: ["NET_BIND_SERVICE"]
+    # -- linux cabilities to disallow for the coturn k8s pod
+    drop: ["ALL"]

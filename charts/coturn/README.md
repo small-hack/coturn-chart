@@ -76,7 +76,11 @@ A Helm chart to deploy coturn
 | postgresql.global.postgresql.auth.username | string | `"coturn"` | username for database, ignored if existingSecret is passed in |
 | replicas | int | `2` |  |
 | resources | object | `{}` | ref: kubernetes.io/docs/concepts/configuration/manage-resources-containers |
+| securityContext.allowPrivilegeEscalation | bool | `true` | allow priviledged access |
+| securityContext.capabilities.add | list | `["NET_BIND_SERVICE"]` | linux cabilities to allow for the coturn k8s pod |
+| securityContext.capabilities.drop | list | `["ALL"]` | linux cabilities to disallow for the coturn k8s pod |
 | securityContext.fsGroup | int | `1000` | all processes of the container are also part of the supplementary groupID |
+| securityContext.readOnlyRootFilesystem | bool | `false` | allow modificatin to root filesystem |
 | securityContext.runAsGroup | int | `1000` | for all Containers in the Pod, all processes run w/ this GroupID |
 | securityContext.runAsUser | int | `1000` | for all Containers in the Pod, all processes run w/ this userID |
 | service.externalTrafficPolicy | string | `"Local"` | I don't actually know what this is 🤔 open a PR if you know |
