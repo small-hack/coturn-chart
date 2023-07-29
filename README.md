@@ -11,8 +11,10 @@ helm repo add coturn https://jessebot.github.io/coturn-chart/
 helm install coturn coturn --values values.yaml
 ```
 
-### Basics
-At very least, you'll need to configure a coturn [realm](https://github.com/coturn/coturn/blob/d7db17f048675f46fc2b30827813eeaf0c822fb2/examples/etc/turnserver.conf#L349-L358) which is used for authentication as well.
+## Basics
+
+### Coturn Realm
+At very least, you'll need to configure a coturn [realm](https://github.com/coturn/coturn/blob/d7db17f048675f46fc2b30827813eeaf0c822fb2/examples/etc/turnserver.conf#L349-L358) which is like your hostname, and is used for authentication as well.
 
 ```yaml
 # most coturn config parameters that you really need
@@ -21,7 +23,8 @@ coturn:
   realm: "turn.example.com"
 ```
 
-You probably also want to test a user. To do that you can pass in some credentials directly either plaintext or via an existing k8s secret like this:
+### Adding a user declaritively
+Pass in one set of credentials (username/password) directly either plaintext, or via an existing k8s secret, like this:
 
 ```yaml
 # most coturn config parameters that you really need
@@ -42,6 +45,8 @@ coturn:
       # -- key in existing secret for turn server user's password
       password: password
 ```
+
+Currently only one user is supported, but we'd like to support adding more than that to match what is possible in the [coturn/coturn:`examples/etc/turnserver.conf`](https://github.com/coturn/coturn/blob/d7db17f048675f46fc2b30827813eeaf0c822fb2/examples/etc/turnserver.conf#L256-L280)
 
 ### Databases
 
@@ -88,6 +93,7 @@ postgresql:
           # -- key in existing Secret to use for coturn user's password
           userPasswordKey: "password"
 ```
+
 You're free to use any other values you find in the [Bitnami postgresql helm values](https://github.com/bitnami/charts/tree/main/bitnami/postgresql) under the `postgresql` parameter in your values.yaml for coturn.
 
 ### External PostgreSQL database
