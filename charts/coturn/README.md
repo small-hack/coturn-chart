@@ -43,7 +43,7 @@ A Helm chart to deploy coturn
 | coturn.ports.tlsListening | int | `5349` | secure listening port |
 | coturn.realm | string | `"turn.example.com"` | hostname for the coturn server realm |
 | externalDatabase.database | string | `""` | database to create, ignored if existingSecret is passed in |
-| externalDatabase.enabled | bool | `true` | enables the use of postgresql instead of the default sqlite |
+| externalDatabase.enabled | bool | `false` | enables the use of postgresql instead of the default sqlite to use the bundled subchart, enable this, and postgresql.enable |
 | externalDatabase.existingSecret | string | `""` | name of existing Secret to use for postgresql credentials |
 | externalDatabase.hostname | string | `""` | required if externalDatabase.enabled: true and postgresql.enabled: false |
 | externalDatabase.password | string | `""` | password for database, ignored if existingSecret is passed in |
@@ -63,7 +63,7 @@ A Helm chart to deploy coturn
 | persistence.existingClaim | string | `""` | existing PVC to use instead of creating one on the fly |
 | persistence.size | string | `"1Mi"` | size of the PVC, ignored if persistence.existingClaim passed in |
 | persistence.storageClass | string | `""` | storageClass for the PVC, ignored if persistence.existingClaim passed in |
-| postgresql.enabled | bool | `true` | enables bitnami postgresql subchart, you can disable to use external db |
+| postgresql.enabled | bool | `false` | enables bitnami postgresql subchart, you can disable to use external db |
 | postgresql.global.postgresql.auth | object | `{"database":"coturn","existingSecret":"","password":"","secretKeys":{"adminPasswordKey":"postgresPassword","database":"database","hostname":"hostname","userPasswordKey":"password","username":"username"},"username":"coturn"}` | global.postgresql.auth overrides postgresql.auth |
 | postgresql.global.postgresql.auth.database | string | `"coturn"` | database to create, ignored if existingSecret is passed in |
 | postgresql.global.postgresql.auth.existingSecret | string | `""` | name of existing Secret to use for postgresql credentials |

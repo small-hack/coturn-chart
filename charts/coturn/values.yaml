@@ -52,7 +52,8 @@ certificate:
 
 externalDatabase:
   # -- enables the use of postgresql instead of the default sqlite
-  enabled: true
+  # to use the bundled subchart, enable this, and postgresql.enable
+  enabled: false
   # -- Currently only postgresql is supported. mysql coming soon
   type: "postgresql"
   # -- required if externalDatabase.enabled: true and postgresql.enabled: false
@@ -80,7 +81,7 @@ externalDatabase:
 # see: https://github.com/bitnami/charts/tree/main/bitnami/postgresql
 postgresql:
   # -- enables bitnami postgresql subchart, you can disable to use external db
-  enabled: true
+  enabled: false
   global:
     postgresql:
       # -- global.postgresql.auth overrides postgresql.auth
