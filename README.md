@@ -2,7 +2,7 @@
 An unofficial [coturn](https://github.com/coturn/coturn) helm chart using the official [coturn docker image](https://hub.docker.com/r/coturn/coturn).
 
 * [Usage](#usage)
-        * [TLDR](#tldr)
+    * [TLDR;](#tldr)
     * [Basics](#basics)
         * [Coturn Realm](#coturn-realm)
         * [Adding a user declaritively](#adding-a-user-declaritively)
