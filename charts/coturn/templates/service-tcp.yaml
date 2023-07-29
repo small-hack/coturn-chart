@@ -10,13 +10,13 @@ spec:
   externalTrafficPolicy: {{.Values.service.externalTrafficPolicy}}
   ports:
     - name: turn-tcp
-      port: {{ .Values.ports.listening }}
+      port: {{ .Values.coturn.ports.listening }}
       protocol: TCP
-      targetPort: {{ .Values.ports.listening }}
+      targetPort: {{ .Values.coturn.ports.listening }}
     - name: turn-tcp-tls
-      port: {{ .Values.ports.tlsListening }}
+      port: {{ .Values.coturn.ports.tlsListening }}
       protocol: TCP
-      targetPort: {{ .Values.ports.tlsListening }}
+      targetPort: {{ .Values.coturn.ports.tlsListening }}
   selector:
     app.kubernetes.io/name: {{ .Release.Name }}-coturn
     app.kubernetes.io/instance: {{ .Release.Name }}

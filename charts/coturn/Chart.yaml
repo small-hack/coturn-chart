@@ -3,13 +3,18 @@ name: coturn
 type: application
 description: A Helm chart to deploy coturn
 home: "https://github.com/jessebot/coturn-chart"
+version: 4.0.0
+appVersion: 4.6.2
 sources:
   - "https://github.com/jessebot/coturn-chart"
-  
-version: 3.0.5
-appVersion: 4.6.2
 
 maintainers:
   - name: "jessebot"
     email: "jessebot@linux.com"
     url: "https://github.com/jessebot/"
+
+dependencies:
+  - name: postgresql
+    version: 12.6.9
+    repository: oci://registry-1.docker.io/bitnamicharts
+    condition: postgresql.enabled
