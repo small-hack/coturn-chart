@@ -84,7 +84,7 @@ postgresql:
   enabled: false
   global:
     postgresql:
-      # -- global.postgresql.auth overrides postgresql.auth
+      # global.postgresql.auth overrides postgresql.auth
       auth:
         # -- username for database, ignored if existingSecret is passed in
         username: "coturn"
