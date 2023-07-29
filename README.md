@@ -1,5 +1,5 @@
 # coturn helm chart
-A helm chart for coturn. An unofficial helm chart using the official [coturn docker image](https://hub.docker.com/r/coturn/coturn) from [coturn](https://github.com/coturn/coturn).
+An unofficial [coturn](https://github.com/coturn/coturn) helm chart using the official [coturn docker image](https://hub.docker.com/r/coturn/coturn).
 
 # Usage
 
