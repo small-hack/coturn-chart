@@ -11,7 +11,7 @@ An unofficial [coturn](https://github.com/coturn/coturn) helm chart using the of
         * [Bundled PostgreSQL subchart](#bundled-postgresql-subchart)
         * [External PostgreSQL database](#external-postgresql-database)
     * [Testing](#testing)
-    * [Status and Contributing](#status-and-contributing)
+* [Status and Contributing](#status-and-contributing)
     * [Thanks](#thanks)
 
 # Usage
@@ -177,7 +177,7 @@ Source: [Tutorial for turnutils_uclient and Coturn server](https://gist.github.c
     4: (18446744073709551615): INFO: Average jitter 1.700000 ms; min = 0 ms, max = 9 ms
     ```
 
-## Status and Contributing
+# Status and Contributing
 This is actively maintained by both live developers and [renovateBot](https://github.com/renovatebot/github-action) via a scheduled Github Action. If you'd like to contribute, please read the [CONTRIBUTING.md](./CONTRIBUTING.md) feel free to open a PR :) If you'd like a feature or want to report a bug, please do that in the GitHub Issues. If you know coturn and k8s well enough, please also feel free to scan the issues and help others <3
 
 ## Thanks
