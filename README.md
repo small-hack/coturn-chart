@@ -1,6 +1,16 @@
 # coturn helm chart
 An unofficial [coturn](https://github.com/coturn/coturn) helm chart using the official [coturn docker image](https://hub.docker.com/r/coturn/coturn).
 
+* [Usage](#usage)
+    * [TLDR](#tldr)
+        * [Basics](#basics)
+        * [Databases](#databases)
+        * [Internal SQLite database](#internal-sqlite-database)
+        * [Bundled PostgreSQL subchart](#bundled-postgresql-subchart)
+        * [External PostgreSQL database](#external-postgresql-database)
+    * [Status and Contributing](#status-and-contributing)
+    * [Thanks](#thanks)
+
 # Usage
 
 ## TLDR 
