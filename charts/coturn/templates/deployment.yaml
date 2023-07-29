@@ -60,7 +60,11 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ include "coturn.auth.secretName" . }}
+                  {{- if and .Values.coturn.auth.existingSecret .Values.coturn.auth.secretKeys.username }}
                   key: {{ .Values.coturn.auth.secretKeys.username }}
+                  {{ else }}
+                  key: username
+                  {{- end }}
             - name: PASSWORD
               valueFrom:
                 secretKeyRef:
