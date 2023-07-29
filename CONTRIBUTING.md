@@ -1,5 +1,7 @@
 # Contributing
-Please make sure you run the pre-commit hooks before submitting a PR. To run them, make sure you have [pre-commit installed](https://pre-commit.com/index.html#install), and then clone the repo and run:
+Please make sure you run the git pre-commit hooks before submitting a PR.
+
+To run them, make sure you have [pre-commit](https://pre-commit.com/index.html#install) and [helm-docs](https://github.com/norwoodj/helm-docs#installation) installed. Then, after you've cloned the repo, run:
 ```bash
 pre-commit install
 ```
