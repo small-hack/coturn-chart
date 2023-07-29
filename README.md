@@ -21,6 +21,28 @@ coturn:
   realm: "turn.example.com"
 ```
 
+You probably also want to test a user. To do that you can pass in some credentials directly either plaintext or via an existing k8s secret like this:
+
+```yaml
+# most coturn config parameters that you really need
+coturn:
+  # --  hostname for the coturn server realm
+  realm: "turn.example.com"
+
+  auth:
+    # -- username for the main user of the turn server; ignored if you existingSecret is not ""
+    username: "coturn"
+    # -- password for the main user of the turn server; ignored if you existingSecret is not ""
+    password: "myverysecretpasswordthatimobviouslygoingtochangeright"
+    # -- existing secret with keys username/password for coturn; if this is not "" then we will ignore coturn.auth.username/password
+    existingSecret: ""
+    secretKeys:
+      # -- key in existing secret for turn server user
+      username: username
+      # -- key in existing secret for turn server user's password
+      password: password
+```
+
 ### Databases
 
 ### Internal SQLite database
