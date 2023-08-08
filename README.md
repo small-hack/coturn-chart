@@ -21,7 +21,7 @@ Note that you still need to fill out the [`charts/coturn/values.yaml`](./charts/
 
 ```console
 helm repo add coturn https://jessebot.github.io/coturn-chart/
-helm install coturn coturn --values values.yaml
+helm install coturn coturn/coturn --values values.yaml
 ```
 
 ## Basics
