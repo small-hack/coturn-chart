@@ -4,11 +4,8 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - '.github/**'
-      - 'LICENSE'
-      - 'README.md'
-      - 'CONTRIBUTING.md'
+    paths:
+      - 'charts/**'
 
 jobs:
   release:
