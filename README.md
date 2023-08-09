@@ -1,4 +1,6 @@
-# coturn helm chart
+# coturn Helm Chart
+<a href="https://github.com/jessebot/coturn-chart/releases"><img src="https://img.shields.io/github/v/release/jessebot/coturn-chart?style=plastic&labelColor=blue&color=green&logo=GitHub&logoColor=white"></a>
+
 An unofficial [coturn](https://github.com/coturn/coturn) helm chart using the official [coturn docker image](https://hub.docker.com/r/coturn/coturn).
 
 * [Usage](#usage)
