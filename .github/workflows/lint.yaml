@@ -2,11 +2,8 @@ name: Lint Charts
 
 on:
   pull_request:
-    paths-ignore:
-      - '.github/**'
-      - 'LICENSE'
-      - 'README.md'
-      - 'CONTRIBUTING.md'
+    paths:
+      - 'charts/**'
 
 jobs:
   lint:
