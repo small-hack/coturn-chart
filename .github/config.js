@@ -4,10 +4,9 @@ module.exports = {
   gitAuthor: 'Renovate Bot <bot@renovateapp.com>',
   platform: 'github',
   includeForks: true,
-  dependencyDashboard: false,
   dryRun: null,
   repositories: ['jessebot/coturn-chart'],
-    extends: ['config:base'],
+    extends: ['config:base', ":disableDependencyDashboard"],
     allowPostUpgradeCommandTemplating: true,
     allowedPostUpgradeCommands: ['^.*'],
     regexManagers: [
