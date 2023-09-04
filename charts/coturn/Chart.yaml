@@ -3,7 +3,7 @@ name: coturn
 type: application
 description: A Helm chart to deploy coturn
 home: "https://github.com/jessebot/coturn-chart"
-version: 4.2.2
+version: 4.3.0
 
 # renovate: image=coturn/coturn
 appVersion: 4.6.2
@@ -17,6 +17,6 @@ maintainers:
 
 dependencies:
   - name: postgresql
-    version: 12.8.3
+    version: 12.9.0
     repository: oci://registry-1.docker.io/bitnamicharts
     condition: postgresql.enabled
