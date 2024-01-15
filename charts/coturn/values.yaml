@@ -107,6 +107,11 @@ postgresql:
           adminPasswordKey: "postgresPassword"
           # -- key in existing Secret to use for coturn user's password
           userPasswordKey: "password"
+  primary:
+    initdb:
+      # -- ConfigMap with scripts to be run at first boot
+      scriptsConfigMap: initdb-scripts-config
+
 
 # MySQL chart configuration
 # see: https://github.com/bitnami/charts/tree/main/bitnami/mysql

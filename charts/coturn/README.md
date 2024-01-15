@@ -80,6 +80,7 @@ A Helm chart to deploy coturn
 | postgresql.global.postgresql.auth.secretKeys.userPasswordKey | string | `"password"` | key in existing Secret to use for coturn user's password |
 | postgresql.global.postgresql.auth.secretKeys.username | string | `"username"` | key in exsiting Secret to use for the coturn user |
 | postgresql.global.postgresql.auth.username | string | `"coturn"` | username for database, ignored if existingSecret is passed in |
+| postgresql.primary.initdb.scriptsConfigMap | string | `"initdb-scripts-config"` | ConfigMap with scripts to be run at first boot |
 | replicas | int | `1` |  |
 | resources | object | `{}` | ref: kubernetes.io/docs/concepts/configuration/manage-resources-containers |
 | securityContext.allowPrivilegeEscalation | bool | `true` | allow priviledged access |
