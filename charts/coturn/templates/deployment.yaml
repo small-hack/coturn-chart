@@ -53,6 +53,18 @@ spec:
             - "sh"
             - "-c"
             - "until pg_isready -h $DATABASE_HOSTNAME -U $POSTGRES_USER ; do sleep 2 ; done"
+        {{- else if .Values.mysql.enabled }}
+        - name: mysql-isready
+          image: {{ .Values.mysql.image.repository }}:{{ .Values.mysql.image.tag }}
+          env:
+            # TODO: template user pass
+            # TODO: externalDatabase
+            - name: DATABASE_HOSTNAME
+              value: {{ template "mysql.primary.fullname" .Subcharts.mysql }}
+          command:
+            - "sh"
+            - "-c"
+            - "until mysql -h $DATABASE_HOSTNAME -u coturn -pcoturn -e 'SELECT VERSION();' ; do sleep 2 ; done"
         {{- end }}
         - name: add-secret-values-to-config
           image: "mikefarah/yq:latest"
@@ -72,15 +84,17 @@ spec:
                 secretKeyRef:
                   name: {{ include "coturn.auth.secretName" . }}
                   key: {{ .Values.coturn.auth.secretKeys.password }}
-            {{- if or .Values.externalDatabase.enabled .Values.postgresql.enabled }}
+            {{- if or .Values.externalDatabase.enabled .Values.postgresql.enabled .Values.mysql.enabled }}
             - name: DATABASE_HOSTNAME
             {{- if and .Values.externalDatabase.enabled .Values.externalDatabase.secretKeys.hostname }}
               valueFrom:
                 secretKeyRef:
                   name: {{ include "database.secretName" . }}
                   key: {{ .Values.externalDatabase.secretKeys.hostname }}
-            {{ else }}
+            {{ else if .Values.postgresql.enabled }}
               value: {{ template "postgresql.primary.fullname" .Subcharts.postgresql }}
+            {{ else if .Values.mysql.enabled }}
+              value: {{ template "mysql.primary.fullname" .Subcharts.mysql }}
             {{- end }}
             - name: DATABASE_USER
               valueFrom:
@@ -88,8 +102,10 @@ spec:
                   name: {{ include "database.secretName" . }}
                   {{- if and .Values.externalDatabase.enabled .Values.externalDatabase.secretKeys.username }}
                   key: {{ .Values.externalDatabase.secretKeys.username }}
-                  {{ else }}
+                  {{ else if .Values.postgresql.enabled }}
                   key: {{ .Values.postgresql.global.postgresql.auth.secretKeys.username }}
+                  {{ else if .Values.mysql.enabled }}
+                  key: username
                   {{- end }}
             - name: DATABASE_PASS
               valueFrom:
@@ -97,8 +113,10 @@ spec:
                   name: {{ include "database.secretName" . }}
                   {{- if and .Values.externalDatabase.enabled .Values.externalDatabase.secretKeys.password }}
                   key: {{ .Values.externalDatabase.secretKeys.password }}
-                  {{ else }}
+                  {{ else if .Values.postgresql.enabled }}
                   key: {{ .Values.postgresql.global.postgresql.auth.secretKeys.userPasswordKey }}
+                  {{ else if .Values.mysql.enabled }}
+                  key: password
                   {{- end }}
             - name: DATABASE
               valueFrom:
@@ -106,8 +124,10 @@ spec:
                   name: {{ include "database.secretName" . }}
                   {{- if and .Values.externalDatabase.enabled .Values.externalDatabase.secretKeys.database }}
                   key: {{ .Values.externalDatabase.secretKeys.database }}
-                  {{ else }}
+                  {{ else if .Values.postgresql.enabled }}
                   key: {{ .Values.postgresql.global.postgresql.auth.secretKeys.database }}
+                  {{ else if .Values.mysql.enabled }}
+                  key: database
                   {{- end }}
             {{- end }}
           command:
@@ -117,9 +137,12 @@ spec:
               cp /initial/turnserver.conf /data/turnserver.yaml && \
               export USER_STR="$USER:$PASSWORD" && \
               yq eval -i '.user = env(USER_STR)' /data/turnserver.yaml && \
-              export CONNECTION_STRING="host=$DATABASE_HOSTNAME dbname=$DATABASE user=$DATABASE_USER password=$DATABASE_PASS connect_timeout=30" && \
               {{- if or .Values.externalDatabase.enabled .Values.postgresql.enabled }}
-              yq eval '.psql-userdb = env(CONNECTION_STRING)' /data/turnserver.yaml && \
+              export CONNECTION_STRING="host=$DATABASE_HOSTNAME dbname=$DATABASE user=$DATABASE_USER password=$DATABASE_PASS connect_timeout=30" && \
+              yq eval -i '.psql-userdb = env(CONNECTION_STRING)' /data/turnserver.yaml && \
+              {{- else if .Values.mysql.enabled }}
+              export CONNECTION_STRING="host=$DATABASE_HOSTNAME dbname=$DATABASE user=$DATABASE_USER password=$DATABASE_PASS port=3306 connect_timeout=10 read_timeout=10" && \
+              yq eval -i '.mysql-userdb = env(CONNECTION_STRING)' /data/turnserver.yaml && \
               {{- end }}
               sed -i 's/: /=/' /data/turnserver.yaml && \
               cat /extra/turnserver.conf >> /data/turnserver.yaml && \
