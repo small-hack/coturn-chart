@@ -54,7 +54,7 @@ externalDatabase:
   # -- enables the use of postgresql instead of the default sqlite
   # to use the bundled subchart, enable this, and postgresql.enable
   enabled: false
-  # -- Currently only postgresql is supported. mysql coming soon
+  # -- Currently postgresql and mysql are supported.
   type: "postgresql"
   # -- required if externalDatabase.enabled: true and postgresql.enabled: false
   hostname: ""

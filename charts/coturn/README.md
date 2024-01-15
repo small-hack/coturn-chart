@@ -52,7 +52,7 @@ A Helm chart to deploy coturn
 | externalDatabase.secretKeys.hostname | string | `""` | key in existing Secret to use for the db's hostname |
 | externalDatabase.secretKeys.password | string | `""` | key in existing Secret to use for db user's password |
 | externalDatabase.secretKeys.username | string | `""` | key in existing Secret to use for the db user |
-| externalDatabase.type | string | `"postgresql"` | Currently only postgresql is supported. mysql coming soon |
+| externalDatabase.type | string | `"postgresql"` | Currently postgresql and mysql are supported. |
 | externalDatabase.username | string | `""` | username for database, ignored if existingSecret is passed in |
 | image.pullPolicy | string | `"IfNotPresent"` | image pull policy, set to Always if using image.tag: latest |
 | image.repository | string | `"coturn/coturn"` | container registry and repo for coturn docker image |
