@@ -50,3 +50,27 @@ Helper function to get the coturn secret containing admin coturn credentials
 {{ .Release.Name }}-auth-secret
 {{- end }}
 {{- end }}
+
+{{- define "db.isReady.image.repository" -}}
+{{- if and .Values.externalDatabase.enabled (eq .Values.externalDatabase.type "postgresql") -}}
+postgres
+{{- else if and .Values.externalDatabase.enabled (eq .Values.externalDatabase.type "mysql") -}}
+mysql
+{{- else if .Values.postgresql.enabled -}}
+{{ .Values.postgresql.image.repository }}
+{{- else if .Values.mysql.enabled -}}
+{{ .Values.mysql.image.repository }}
+{{- end -}}
+{{- end -}}
+
+{{- define "db.isReady.image.tag" -}}
+{{- if and .Values.externalDatabase.enabled (eq .Values.externalDatabase.type "postgresql") -}}
+15-alpine
+{{- else if and .Values.externalDatabase.enabled (eq .Values.externalDatabase.type "mysql") -}}
+8.0.35
+{{- else if .Values.postgresql.enabled -}}
+{{ .Values.postgresql.image.tag }}
+{{- else if .Values.mysql.enabled -}}
+{{ .Values.mysql.image.tag }}
+{{- end -}}
+{{- end -}}
