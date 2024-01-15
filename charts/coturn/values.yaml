@@ -123,6 +123,8 @@ mysql:
     # -- Use existing secret for password details. 
     # The secret has to contain the keys mysql-root-password, mysql-replication-password and mysql-password
     existingSecret: ""
+  # -- ConfigMap with the initdb scripts (Note: Overrides initdbScripts)
+  initdbScriptsConfigMap: initdb-scripts-config
 
 persistence:
   # -- existing PVC to use instead of creating one on the fly
