@@ -155,6 +155,7 @@ spec:
               {{- end }}
               sed -i 's/: /=/' /data/turnserver.yaml && \
               cat /extra/turnserver.conf >> /data/turnserver.yaml && \
+              echo '' >> /data/turnserver.yaml && \
               echo 'lt-cred-mech' >> /data/turnserver.yaml && \
               mv /data/turnserver.yaml /data/turnserver.conf
           volumeMounts:
