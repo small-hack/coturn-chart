@@ -57,14 +57,23 @@ spec:
         - name: mysql-isready
           image: {{ .Values.mysql.image.repository }}:{{ .Values.mysql.image.tag }}
           env:
-            # TODO: template user pass
             # TODO: externalDatabase
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "database.secretName" . }}
+                  key: {{ .Values.mysql.auth.secretKeys.username }}
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "database.secretName" . }}
+                  key: {{ .Values.mysql.auth.secretKeys.password }}
             - name: DATABASE_HOSTNAME
               value: {{ template "mysql.primary.fullname" .Subcharts.mysql }}
           command:
             - "sh"
             - "-c"
-            - "until mysql -h $DATABASE_HOSTNAME -u coturn -pcoturn -e 'SELECT VERSION();' ; do sleep 2 ; done"
+            - "until mysql -h $DATABASE_HOSTNAME -u $MYSQL_USER -p$MYSQL_PASSWORD -e 'SELECT VERSION();' ; do sleep 2 ; done"
         {{- end }}
         - name: add-secret-values-to-config
           image: "mikefarah/yq:latest"
