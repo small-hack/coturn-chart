@@ -72,11 +72,6 @@ A Helm chart to deploy coturn
 | mysql.enabled | bool | `false` | enables bitnami mysql subchart, you can disable to use external db |
 | mysql.initdbScriptsConfigMap | string | `"initdb-scripts-config"` | ConfigMap with the initdb scripts (Note: Overrides initdbScripts) |
 | nameOverride | string | `""` | different name for the helm release |
-| persistence.accessMode | string | `"ReadWriteOnce"` | access mode for the PVC, ignored if persistence.existingClaim passed in |
-| persistence.annotations | object | `{}` | annotations for the PVC, ignored if persistence.existingClaim passed in |
-| persistence.existingClaim | string | `""` | existing PVC to use instead of creating one on the fly |
-| persistence.size | string | `"1Mi"` | size of the PVC, ignored if persistence.existingClaim passed in |
-| persistence.storageClass | string | `""` | storageClass for the PVC, ignored if persistence.existingClaim passed in |
 | podSecurityContext.enabled | bool | `true` | Enables Pod Security Context |
 | podSecurityContext.fsGroup | int | `1000` | all processes of the container are also part of the supplementary groupID |
 | podSecurityContext.runAsGroup | int | `1000` | for all Containers in the Pod, all processes run w/ this GroupID |

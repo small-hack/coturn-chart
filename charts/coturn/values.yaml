@@ -136,18 +136,6 @@ mysql:
   # -- ConfigMap with the initdb scripts (Note: Overrides initdbScripts)
   initdbScriptsConfigMap: initdb-scripts-config
 
-persistence:
-  # -- existing PVC to use instead of creating one on the fly
-  existingClaim: ""
-  # -- annotations for the PVC, ignored if persistence.existingClaim passed in
-  annotations: {}
-  # -- access mode for the PVC, ignored if persistence.existingClaim passed in
-  accessMode: "ReadWriteOnce"
-  # -- size of the PVC, ignored if persistence.existingClaim passed in
-  size: "1Mi"
-  # -- storageClass for the PVC, ignored if persistence.existingClaim passed in
-  storageClass: ""
-
 # most coturn config parameters that you really need
 coturn:
   # --  hostname for the coturn server realm

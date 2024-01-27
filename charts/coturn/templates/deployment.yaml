@@ -271,12 +271,7 @@ spec:
           configMap:
             name: {{ .Release.Name }}-extra-config
         - name: {{ .Release.Name }}-config
-          persistentVolumeClaim:
-            {{- if .Values.persistence.existingClaim }}
-            claimName: {{ .Values.persistence.existingClaim }}
-            {{ else }}
-            claimName: {{ .Release.Name }}-config
-            {{- end }}
+          emptyDir: {}
         - name: var-tmp
           emptyDir: {}
         {{- if and (not .Values.externalDatabase.enabled) (not .Values.postgresql.enabled) (not .Values.mysql.enabled) }}
