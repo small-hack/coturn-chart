@@ -147,4 +147,4 @@ jobs:
         id: install
         if: steps.list-changed.outputs.changed == 'true'
         run: |
-            ct install --target-branch ${{ github.event.repository.default_branch }} --helm-extra-set-args "--set=postgresql.enabled=true --set=postgresql.global.postgresql.auth.password=testing12345678"
+            ct install --target-branch ${{ github.event.repository.default_branch }} --helm-extra-set-args "--set=mysql.enabled=true --set=mysql.auth.password=testing12345678"
