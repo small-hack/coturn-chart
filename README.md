@@ -4,17 +4,19 @@
 An unofficial [coturn](https://github.com/coturn/coturn) helm chart using the official [coturn docker image](https://hub.docker.com/r/coturn/coturn).
 
 * [Usage](#usage)
-    * [TLDR;](#tldr)
-    * [Basics](#basics)
-        * [Coturn Realm](#coturn-realm)
-        * [Adding a user declaritively](#adding-a-user-declaritively)
-        * [Databases](#databases)
-        * [Internal SQLite database](#internal-sqlite-database)
-        * [Bundled PostgreSQL subchart](#bundled-postgresql-subchart)
-        * [External PostgreSQL database](#external-postgresql-database)
-    * [Testing](#testing)
+  * [TLDR](#tldr)
+  * [Basics](#basics)
+    * [Coturn Realm](#coturn-realm)
+    * [Adding a user declaritively](#adding-a-user-declaritively)
+    * [Databases](#databases)
+    * [Internal SQLite database](#internal-sqlite-database)
+    * [Bundled PostgreSQL subchart](#bundled-postgresql-subchart)
+    * [External PostgreSQL database](#external-postgresql-database)
+    * [Bundled MySQL subchart](#bundled-mysql-subchart)
+    * [External MySQL database](#external-mysql-database)
+  * [Testing](#testing)
 * [Status and Contributing](#status-and-contributing)
-    * [Thanks](#thanks)
+  * [Thanks](#thanks)
 
 # Usage
 
@@ -211,19 +213,17 @@ Source: [Tutorial for turnutils_uclient and Coturn server](https://gist.github.c
     brew install coturn
     ```
 
-2. Test the connection to the server:
-  
+2. Test the connection to the server. This is an example for LoadBalancer type services:
     ```bash
-    # example for LoadBalancer type services:
-    
-    turnutils_uclient -u $COTURN_USER -w $COTURN_PASSWORD \
+    turnutils_uclient -u $COTURN_USER \
+      -w $COTURN_PASSWORD \
       -L $CLIENT_IP \
       -y $SERVER_UDP_IP
     ```
 
     A Successful test looks like this:
   
-    ```
+    ```logtalk
     0: (18446744073709551615): INFO: Total connect time is 0
     1: (18446744073709551615): INFO: start_mclient: msz=4, tot_send_msgs=0, tot_recv_msgs=0, tot_send_bytes ~ 0, tot_recv_bytes ~ 0
     2: (18446744073709551615): INFO: start_mclient: msz=4, tot_send_msgs=0, tot_recv_msgs=0, tot_send_bytes ~ 0, tot_recv_bytes ~ 0
