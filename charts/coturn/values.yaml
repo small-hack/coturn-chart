@@ -125,7 +125,7 @@ mysql:
     password: ""
     # -- database to create, ignored if existingSecret is passed in
     database: "coturn"
-    # -- Use existing secret for password details. 
+    # -- Use existing secret for password details.
     # The secret has to contain the keys mysql-root-password, mysql-replication-password and mysql-password
     existingSecret: ""
     # Names of the keys in existing secret to use for MySQL credentials

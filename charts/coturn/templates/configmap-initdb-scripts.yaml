@@ -1,4 +1,4 @@
----
+{{- if .Values.mysql.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -61,3 +61,4 @@ data:
         password varchar(127),
         primary key (name)
     );
+{{- end }}
