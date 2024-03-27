@@ -110,7 +110,7 @@ postgresql:
   primary:
     initdb:
       # -- ConfigMap with scripts to be run at first boot
-      scriptsConfigMap: initdb-scripts-config
+      scriptsConfigMap: ""
 
 
 # MySQL chart configuration

@@ -3,7 +3,7 @@ name: coturn
 type: application
 description: A Helm chart to deploy coturn
 home: "https://github.com/small-hack/coturn-chart"
-version: 4.6.0
+version: 5.0.0
 
 # renovate: image=coturn/coturn
 appVersion: 4.6.2
@@ -17,10 +17,10 @@ maintainers:
 
 dependencies:
   - name: postgresql
-    version: 12.12.10
+    version: 15.1.4
     repository: oci://registry-1.docker.io/bitnamicharts
     condition: postgresql.enabled
   - name: mysql
-    version: 9.23.0
+    version: 10.1.0
     repository: oci://registry-1.docker.io/bitnamicharts
     condition: mysql.enabled

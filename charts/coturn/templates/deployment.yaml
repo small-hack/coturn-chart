@@ -47,7 +47,7 @@ spec:
                   name: {{ include "database.secretName" . }}
                   key: {{ .Values.externalDatabase.secretKeys.hostname }}
             {{ else }}
-              value: {{ template "postgresql.primary.fullname" .Subcharts.postgresql }}
+              value: {{ template "postgresql.v1.primary.fullname" .Subcharts.postgresql }}
             {{- end }}
           command:
             - "sh"
@@ -115,7 +115,7 @@ spec:
                   name: {{ include "database.secretName" . }}
                   key: {{ .Values.externalDatabase.secretKeys.hostname }}
             {{ else if .Values.postgresql.enabled }}
-              value: {{ template "postgresql.primary.fullname" .Subcharts.postgresql }}
+              value: {{ template "postgresql.v1.primary.fullname" .Subcharts.postgresql }}
             {{ else if .Values.mysql.enabled }}
               value: {{ template "mysql.primary.fullname" .Subcharts.mysql }}
             {{- end }}
@@ -209,6 +209,10 @@ spec:
             {{- end }}
             - name: var-tmp
               mountPath: /var/tmp
+            {{- if and (not .Values.externalDatabase.enabled) (not .Values.postgresql.enabled) (not .Values.mysql.enabled) }}
+            - name: sqllite
+              mountPath: /var/db
+            {{- end }}
           {{- with .Values.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
@@ -234,3 +238,7 @@ spec:
             {{- end }}
         - name: var-tmp
           emptyDir: {}
+        {{- if and (not .Values.externalDatabase.enabled) (not .Values.postgresql.enabled) (not .Values.mysql.enabled) }}
+        - name: sqllite
+          emptyDir: {}
+        {{- end }}
