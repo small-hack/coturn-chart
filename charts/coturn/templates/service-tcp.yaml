@@ -15,16 +15,10 @@ spec:
       port: {{ .Values.coturn.ports.listening }}
       protocol: TCP
       targetPort: {{ .Values.coturn.ports.listening }}
-      {{- if eq .Values.service.type "NodePort" }}
-      nodePort: {{ .Values.coturn.port.listening }}
-      {{- end }}
     - name: turn-tcp-tls
       port: {{ .Values.coturn.ports.tlsListening }}
       protocol: TCP
       targetPort: {{ .Values.coturn.ports.tlsListening }}
-      {{- if eq .Values.service.type "NodePort" }}
-      nodePort: {{ .Values.coturn.port.tlsListening }}
-      {{- end }}
   selector:
     app.kubernetes.io/name: {{ .Release.Name }}-coturn
     app.kubernetes.io/instance: {{ .Release.Name }}
