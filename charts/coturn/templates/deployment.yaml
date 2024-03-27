@@ -115,9 +115,9 @@ spec:
                   name: {{ include "database.secretName" . }}
                   key: {{ .Values.externalDatabase.secretKeys.hostname }}
             {{ else if .Values.postgresql.enabled }}
-              value: {{ template "postgresql.primary.fullname" .Subcharts.postgresql }}
+              value: {{ template "postgresql.v1.primary.fullname" .Subcharts.postgresql }}
             {{ else if .Values.mysql.enabled }}
-              value: {{ template "mysql.primary.fullname" .Subcharts.mysql }}
+              value: {{ template "mysql.v1.primary.fullname" .Subcharts.mysql }}
             {{- end }}
             - name: DATABASE_USER
               valueFrom:
