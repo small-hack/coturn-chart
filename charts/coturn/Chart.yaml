@@ -2,13 +2,13 @@ apiVersion: v2
 name: coturn
 type: application
 description: A Helm chart to deploy coturn
-home: "https://github.com/jessebot/coturn-chart"
+home: "https://github.com/small-hack/coturn-chart"
 version: 4.4.0
 
 # renovate: image=coturn/coturn
 appVersion: 4.6.2
 sources:
-  - "https://github.com/jessebot/coturn-chart"
+  - "https://github.com/small-hack/coturn-chart"
 
 maintainers:
   - name: "jessebot"
