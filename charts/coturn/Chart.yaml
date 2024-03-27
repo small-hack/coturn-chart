@@ -17,7 +17,7 @@ maintainers:
 
 dependencies:
   - name: postgresql
-    version: 12.12.10
+    version: 15.1.4
     repository: oci://registry-1.docker.io/bitnamicharts
     condition: postgresql.enabled
   - name: mysql
