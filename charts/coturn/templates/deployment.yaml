@@ -82,7 +82,7 @@ spec:
                   name: {{ include "database.secretName" . }}
                   key: {{ .Values.externalDatabase.secretKeys.hostname }}
             {{ else }}
-              value: {{ template "mysql.v1.primary.fullname" .Subcharts.mysql }}
+              value: {{ template "mysql.primary.fullname" .Subcharts.mysql }}
             {{- end }}
           command:
             - "sh"
@@ -117,7 +117,7 @@ spec:
             {{ else if .Values.postgresql.enabled }}
               value: {{ template "postgresql.v1.primary.fullname" .Subcharts.postgresql }}
             {{ else if .Values.mysql.enabled }}
-              value: {{ template "mysql.v1.primary.fullname" .Subcharts.mysql }}
+              value: {{ template "mysql.primary.fullname" .Subcharts.mysql }}
             {{- end }}
             - name: DATABASE_USER
               valueFrom:
