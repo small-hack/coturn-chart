@@ -209,6 +209,10 @@ spec:
             {{- end }}
             - name: var-tmp
               mountPath: /var/tmp
+            {{- if and (not .Values.externalDatabase.enabled) (not .Values.postgresql.enabled) (not .Values.mysql.enabled) }}
+            - name: sqllite
+              mountPath: /var/db
+            {{- end }}
           {{- with .Values.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
@@ -234,3 +238,7 @@ spec:
             {{- end }}
         - name: var-tmp
           emptyDir: {}
+        {{- if and (not .Values.externalDatabase.enabled) (not .Values.postgresql.enabled) (not .Values.mysql.enabled) }}
+        - name: sqllite
+          emptyDir: {}
+        {{- end }}
