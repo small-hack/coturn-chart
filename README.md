@@ -237,8 +237,10 @@ Source: [Tutorial for turnutils_uclient and Coturn server](https://gist.github.c
     4: (18446744073709551615): INFO: Average jitter 1.700000 ms; min = 0 ms, max = 9 ms
     ```
 
+If you're developing the helm chart, note that we have [GitHub Actions CI jobs](https://github.com/small-hack/coturn-chart/blob/main/.github/workflows/lint-and-test-chart.yaml) to test the chart with sqllite, postgresql, and mysql. You can see an example [here](https://github.com/small-hack/coturn-chart/actions/runs/8451352725).
+
 # Status and Contributing
-This is actively maintained by both live developers and [renovateBot](https://github.com/renovatebot/github-action) via a scheduled Github Action. If you'd like to contribute, please read the [CONTRIBUTING.md](./CONTRIBUTING.md) feel free to open a PR :) If you'd like a feature or want to report a bug, please do that in the GitHub Issues. If you know coturn and k8s well enough, please also feel free to scan the issues and help others <3
+This is actively maintained by both live developers and [renovateBot](https://github.com/renovatebot/github-action) via a scheduled Github Action. If you'd like to contribute, please read the [CONTRIBUTING.md](./CONTRIBUTING.md) feel free to open a PR :) If you'd like a feature or want to report a bug, please do that in the GitHub Issues. If you know coturn and k8s well enough, please also feel free to scan the issues and help others <3 We recently moved the repo from jessebot's account to the small-hack org where we maintain all our helm charts.
 
 ## Thanks
-This is a fork of the now deprecated [iits-consulting/coturn](https://github.com/iits-consulting/coturn-chart) chart. Thanks to them for getting this started.
+This is a fork of the, now deprecated, [iits-consulting/coturn](https://github.com/iits-consulting/coturn-chart) chart. Thanks to them for getting this started.
