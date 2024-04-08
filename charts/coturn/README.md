@@ -1,6 +1,6 @@
 # coturn
 
-![Version: 5.0.0](https://img.shields.io/badge/Version-5.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.6.2](https://img.shields.io/badge/AppVersion-4.6.2-informational?style=flat-square)
+![Version: 5.0.1](https://img.shields.io/badge/Version-5.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.6.2](https://img.shields.io/badge/AppVersion-4.6.2-informational?style=flat-square)
 
 A Helm chart to deploy coturn
 
@@ -20,7 +20,7 @@ A Helm chart to deploy coturn
 
 | Repository | Name | Version |
 |------------|------|---------|
-| oci://registry-1.docker.io/bitnamicharts | mysql | 10.1.0 |
+| oci://registry-1.docker.io/bitnamicharts | mysql | 10.1.1 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 15.1.4 |
 
 ## Values
@@ -82,7 +82,7 @@ A Helm chart to deploy coturn
 | postgresql.global.postgresql.auth.secretKeys.userPasswordKey | string | `"password"` | key in existing Secret to use for coturn user's password |
 | postgresql.global.postgresql.auth.secretKeys.username | string | `"username"` | key in exsiting Secret to use for the coturn user |
 | postgresql.global.postgresql.auth.username | string | `"coturn"` | username for database, ignored if existingSecret is passed in |
-| postgresql.primary.initdb.scriptsConfigMap | string | `"initdb-scripts-config"` | ConfigMap with scripts to be run at first boot |
+| postgresql.primary.initdb.scriptsConfigMap | string | `""` | ConfigMap with scripts to be run at first boot |
 | replicas | int | `1` |  |
 | resources | object | `{}` | ref: kubernetes.io/docs/concepts/configuration/manage-resources-containers |
 | securityContext.allowPrivilegeEscalation | bool | `true` | allow priviledged access |
