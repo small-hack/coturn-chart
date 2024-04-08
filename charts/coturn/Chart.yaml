@@ -3,10 +3,10 @@ name: coturn
 type: application
 description: A Helm chart to deploy coturn
 home: "https://github.com/small-hack/coturn-chart"
-version: 5.0.0
+version: 5.0.1
 
 # renovate: image=coturn/coturn
-appVersion: 4.6.3
+appVersion: 4.6.2
 sources:
   - "https://github.com/small-hack/coturn-chart"
 
