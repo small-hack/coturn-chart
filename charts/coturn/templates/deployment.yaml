@@ -20,12 +20,16 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- if .Values.podSecurityContext.enabled }}
+      {{- with .Values.podSecurityContext }}
       securityContext:
-        readOnlyRootFilesystem: {{ .Values.securityContext.readOnlyRootFilesystem }}
-        allowPrivilegeEscalation: {{ .Values.securityContext.allowPrivilegeEscalation }}
-        capabilities:
-          add: {{ .Values.securityContext.capabilities.add }}
-          drop: {{ .Values.securityContext.capabilities.drop }}
+        runAsNonRoot: {{ .runAsNonRoot }}
+        runAsUser: {{ .runAsUser }}
+        runAsGroup: {{ .runAsGroup }}
+        fsGroup: {{ .fsGroup }}
+        seccompProfile: {{- .seccompProfile | toYaml | nindent 10 }}
+      {{- end }}
+      {{- end }}
       initContainers:
         {{- if or .Values.postgresql.enabled (and .Values.externalDatabase.enabled (eq .Values.externalDatabase.type "postgresql")) }}
         - name: postgresql-isready
@@ -53,6 +57,15 @@ spec:
             - "sh"
             - "-c"
             - "until pg_isready -h $DATABASE_HOSTNAME -U $POSTGRES_USER ; do sleep 2 ; done"
+          {{- if .Values.containerSecurityContext.enabled }}
+          {{- with .Values.containerSecurityContext }}
+          securityContext:
+            capabilities:
+              drop: {{- .capabilities.drop | toYaml | nindent 16 }}
+            readOnlyRootFilesystem: {{ .readOnlyRootFilesystem }}
+            allowPrivilegeEscalation: {{ .allowPrivilegeEscalation }}
+          {{- end }}
+          {{- end }}
         {{- else if or .Values.mysql.enabled (and .Values.externalDatabase.enabled (eq .Values.externalDatabase.type "mysql")) }}
         - name: mysql-isready
           image: {{ include "db.isReady.image.repository" . }}:{{ include "db.isReady.image.tag" . }}
@@ -88,6 +101,15 @@ spec:
             - "sh"
             - "-c"
             - "until mysql -h $DATABASE_HOSTNAME -u $MYSQL_USER -p$MYSQL_PASSWORD -e 'SELECT VERSION();' ; do sleep 2 ; done"
+          {{- if .Values.containerSecurityContext.enabled }}
+          {{- with .Values.containerSecurityContext }}
+          securityContext:
+            capabilities:
+              drop: {{- .capabilities.drop | toYaml | nindent 16 }}
+            readOnlyRootFilesystem: {{ .readOnlyRootFilesystem }}
+            allowPrivilegeEscalation: {{ .allowPrivilegeEscalation }}
+          {{- end }}
+          {{- end }}
         {{- end }}
         - name: add-secret-values-to-config
           image: "mikefarah/yq:latest"
@@ -179,6 +201,15 @@ spec:
               mountPath: /extra
             - name: {{ .Release.Name }}-config
               mountPath: /data
+          {{- if .Values.containerSecurityContext.enabled }}
+          {{- with .Values.containerSecurityContext }}
+          securityContext:
+            capabilities:
+              drop: {{- .capabilities.drop | toYaml | nindent 16 }}
+            readOnlyRootFilesystem: {{ .readOnlyRootFilesystem }}
+            allowPrivilegeEscalation: {{ .allowPrivilegeEscalation }}
+          {{- end }}
+          {{- end }}
       containers:
         - name: "coturn"
           image: {{ include "coturn.image" . }}
@@ -217,6 +248,16 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          {{- if .Values.containerSecurityContext.enabled }}
+          {{- with .Values.containerSecurityContext }}
+          securityContext:
+            capabilities:
+              add: {{- .capabilities.add | toYaml | nindent 16 }}
+              drop: {{- .capabilities.drop | toYaml | nindent 16 }}
+            readOnlyRootFilesystem: {{ .readOnlyRootFilesystem }}
+            allowPrivilegeEscalation: {{ .allowPrivilegeEscalation }}
+          {{- end }}
+          {{- end }}
       volumes:
         {{- if .Values.certificate.enabled }}
         - name: tls
@@ -230,12 +271,7 @@ spec:
           configMap:
             name: {{ .Release.Name }}-extra-config
         - name: {{ .Release.Name }}-config
-          persistentVolumeClaim:
-            {{- if .Values.persistence.existingClaim }}
-            claimName: {{ .Values.persistence.existingClaim }}
-            {{ else }}
-            claimName: {{ .Release.Name }}-config
-            {{- end }}
+          emptyDir: {}
         - name: var-tmp
           emptyDir: {}
         {{- if and (not .Values.externalDatabase.enabled) (not .Values.postgresql.enabled) (not .Values.mysql.enabled) }}

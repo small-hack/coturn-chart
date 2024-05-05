@@ -112,7 +112,6 @@ postgresql:
       # -- ConfigMap with scripts to be run at first boot
       scriptsConfigMap: ""
 
-
 # MySQL chart configuration
 # see: https://github.com/bitnami/charts/tree/main/bitnami/mysql
 mysql:
@@ -136,18 +135,6 @@ mysql:
       password: "password"
   # -- ConfigMap with the initdb scripts (Note: Overrides initdbScripts)
   initdbScriptsConfigMap: initdb-scripts-config
-
-persistence:
-  # -- existing PVC to use instead of creating one on the fly
-  existingClaim: ""
-  # -- annotations for the PVC, ignored if persistence.existingClaim passed in
-  annotations: {}
-  # -- access mode for the PVC, ignored if persistence.existingClaim passed in
-  accessMode: "ReadWriteOnce"
-  # -- size of the PVC, ignored if persistence.existingClaim passed in
-  size: "1Mi"
-  # -- storageClass for the PVC, ignored if persistence.existingClaim passed in
-  storageClass: ""
 
 # most coturn config parameters that you really need
 coturn:
@@ -189,19 +176,30 @@ coturn:
 
 # k8s pod security context:
 # https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-securityContext:
+podSecurityContext:
+  # -- Enables Pod Security Context
+  enabled: true
+  # -- for all Containers in the Pod, all processes run as non-root
+  runAsNonRoot: true
   # -- for all Containers in the Pod, all processes run w/ this userID
   runAsUser: 1000
   # -- for all Containers in the Pod, all processes run w/ this GroupID
   runAsGroup: 1000
   # -- all processes of the container are also part of the supplementary groupID
   fsGroup: 1000
-  # -- allow modificatin to root filesystem
-  readOnlyRootFilesystem: false
-  # -- allow priviledged access
-  allowPrivilegeEscalation: true
+  seccompProfile:
+    # --  Filter a process's system calls
+    type: "RuntimeDefault"
+
+containerSecurityContext:
+  # -- Enables Security Context
+  enabled: true
   capabilities:
     # -- linux cabilities to allow for the coturn k8s pod
     add: ["NET_BIND_SERVICE"]
     # -- linux cabilities to disallow for the coturn k8s pod
     drop: ["ALL"]
+  # -- allow modificatin to root filesystem
+  readOnlyRootFilesystem: false
+  # -- allow priviledged access
+  allowPrivilegeEscalation: false
