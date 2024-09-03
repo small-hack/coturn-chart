@@ -112,7 +112,7 @@ spec:
           {{- end }}
         {{- end }}
         - name: add-secret-values-to-config
-          image: "mikefarah/yq:latest"
+          image: {{ .Values.coturn.initContainer.image.repository }}:{{ .Values.coturn.initContainer.image.tag }}
           imagePullPolicy: Always
           env:
             - name: USER
