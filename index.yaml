@@ -3,6 +3,32 @@ entries:
   coturn:
   - apiVersion: v2
     appVersion: 4.6.2
+    created: "2024-09-24T06:59:55.311890431Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 15.5.6
+    - condition: mysql.enabled
+      name: mysql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 11.1.12
+    description: A Helm chart to deploy coturn
+    digest: 80154121d5432b320f0326c22f91ecf9a6341c035cff906b6e65143d97174d62
+    home: https://github.com/small-hack/coturn-chart
+    maintainers:
+    - email: jessebot@linux.com
+      name: jessebot
+      url: https://github.com/jessebot/
+    name: coturn
+    sources:
+    - https://github.com/small-hack/coturn-chart
+    type: application
+    urls:
+    - https://github.com/small-hack/coturn-chart/releases/download/coturn-6.3.1/coturn-6.3.1.tgz
+    version: 6.3.1
+  - apiVersion: v2
+    appVersion: 4.6.2
     created: "2024-09-24T06:52:33.534766249Z"
     dependencies:
     - condition: postgresql.enabled
@@ -769,4 +795,4 @@ entries:
     urls:
     - https://github.com/jessebot/coturn-chart/releases/download/coturn-3.0.2/coturn-3.0.2.tgz
     version: 3.0.2
-generated: "2024-09-24T06:52:33.535050016Z"
+generated: "2024-09-24T06:59:55.312120151Z"
