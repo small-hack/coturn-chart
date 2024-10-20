@@ -21,7 +21,7 @@ A Helm chart to deploy coturn
 | Repository | Name | Version |
 |------------|------|---------|
 | oci://registry-1.docker.io/bitnamicharts | mysql | 11.1.12 |
-| oci://registry-1.docker.io/bitnamicharts | postgresql | 15.5.32 |
+| oci://registry-1.docker.io/bitnamicharts | postgresql | 15.5.35 |
 
 ## Values
 
