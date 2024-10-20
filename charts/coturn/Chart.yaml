@@ -22,6 +22,6 @@ dependencies:
     repository: oci://registry-1.docker.io/bitnamicharts
     condition: postgresql.enabled
   - name: mysql
-    version: 11.1.17
+    version: 11.1.19
     repository: oci://registry-1.docker.io/bitnamicharts
     condition: mysql.enabled
