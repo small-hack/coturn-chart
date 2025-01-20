@@ -23,7 +23,7 @@ jobs:
           helm repo add bitnami https://charts.bitnami.com/bitnami
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.6.1
+        uses: helm/chart-testing-action@v2.7.0
 
       - name: Run chart-testing (list-changed)
         id: list-changed
@@ -55,7 +55,7 @@ jobs:
           helm repo add bitnami https://charts.bitnami.com/bitnami
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.6.1
+        uses: helm/chart-testing-action@v2.7.0
 
       - name: Run chart-testing (list-changed)
         id: list-changed
@@ -92,7 +92,7 @@ jobs:
           helm repo add bitnami https://charts.bitnami.com/bitnami
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.6.1
+        uses: helm/chart-testing-action@v2.7.0
 
       - name: Run chart-testing (list-changed)
         id: list-changed
@@ -129,7 +129,7 @@ jobs:
           helm repo add bitnami https://charts.bitnami.com/bitnami
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.6.1
+        uses: helm/chart-testing-action@v2.7.0
 
       - name: Run chart-testing (list-changed)
         id: list-changed
