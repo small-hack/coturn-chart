@@ -21,9 +21,10 @@ service:
   #   LoadBalancer: This was what was originally set for this chart in the
   #                 upstream of this fork, but with no details
   type: ClusterIP
-  # -- I don't actually know what this is 🤔 open a PR if you know
-  #    was originally "Local"
-  externalTrafficPolicy: ""
+  # -- determines how external traffic is routed to services
+  #   Cluster: mask client source IP
+  #   Local: preserve client source IP (requires service type of NodePort or LoadBalancer)
+  externalTrafficPolicy: "Cluster"
 
 image:
   # -- container registry and repo for coturn docker image
