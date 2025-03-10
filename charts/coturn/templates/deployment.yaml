@@ -215,6 +215,7 @@ spec:
           image: {{ include "coturn.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args: ["-c", "/turnserver.conf"]
+          env: {{ .Values.coturn.extraEnvVars }}
           ports:
             - name: turn-udp
               containerPort: {{ .Values.coturn.ports.listening }}

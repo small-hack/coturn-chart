@@ -142,6 +142,12 @@ coturn:
   # --  hostname for the coturn server realm
   realm: "turn.example.com"
 
+  # -- Extra environment variables to pass to the Coturn container
+  # example:
+  #   - name: STATIC_AUTH_SECRET_VAL_OPT
+  #     value: supersecretpassword123abcyes
+  extraEnvVars: []
+
   auth:
     # -- username for the main user of the turn server
     username: "coturn"
