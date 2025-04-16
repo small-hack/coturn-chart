@@ -76,6 +76,12 @@ externalDatabase:
     database: ""
     # -- key in existing Secret to use for the db's hostname
     hostname: ""
+  # Custom image for database readiness check
+  image:
+    # -- container registry and repo for database readiness docker image
+    repository: ""
+    # -- container tag for coturn database readiness docker image
+    tag: ""
 
 # PostgreSQL chart configuration
 # see: https://github.com/bitnami/charts/tree/main/bitnami/postgresql
