@@ -189,6 +189,7 @@ spec:
               export CONNECTION_STRING="host=$DATABASE_HOSTNAME dbname=$DATABASE user=$DATABASE_USER password=$DATABASE_PASS port=3306 connect_timeout=10 read_timeout=10" && \
               yq eval -i '.mysql-userdb = env(CONNECTION_STRING)' /data/turnserver.yaml && \
               {{- end }}
+              sed -i '1i use-auth-secret' /data/turnserver.yaml && \
               sed -i 's/: /=/' /data/turnserver.yaml && \
               cat /extra/turnserver.conf >> /data/turnserver.yaml && \
               echo '' >> /data/turnserver.yaml && \

@@ -37,6 +37,9 @@ image:
 # -- ref: kubernetes.io/docs/concepts/configuration/manage-resources-containers
 resources: {}
 
+# --- Shared secret for static auth
+sharedSecret: "REPLACE_ME"
+
 # -- Coturn specific labels
 labels:
   component: coturn
