@@ -53,9 +53,9 @@ Helper function to get the coturn secret containing admin coturn credentials
 
 {{- define "db.isReady.image.repository" -}}
 {{- if and .Values.externalDatabase.enabled (eq .Values.externalDatabase.type "postgresql") -}}
-postgres
+{{ .Values.externalDatabase.image.repository | default "postgres" }}
 {{- else if and .Values.externalDatabase.enabled (eq .Values.externalDatabase.type "mysql") -}}
-mysql
+{{ .Values.externalDatabase.image.repository | default "mysql" }}
 {{- else if .Values.postgresql.enabled -}}
 {{ .Values.postgresql.image.repository }}
 {{- else if .Values.mysql.enabled -}}
@@ -65,9 +65,9 @@ mysql
 
 {{- define "db.isReady.image.tag" -}}
 {{- if and .Values.externalDatabase.enabled (eq .Values.externalDatabase.type "postgresql") -}}
-15-alpine
+{{ .Values.externalDatabase.image.tag | default "15-alpine" }}
 {{- else if and .Values.externalDatabase.enabled (eq .Values.externalDatabase.type "mysql") -}}
-8.0.35
+{{ .Values.externalDatabase.image.tag | default "8.0.35" }}
 {{- else if .Values.postgresql.enabled -}}
 {{ .Values.postgresql.image.tag }}
 {{- else if .Values.mysql.enabled -}}
