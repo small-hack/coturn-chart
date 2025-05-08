@@ -1,6 +1,6 @@
 # coturn
 
-![Version: 8.3.0](https://img.shields.io/badge/Version-8.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.6.3](https://img.shields.io/badge/AppVersion-4.6.3-informational?style=flat-square)
+![Version: 8.3.1](https://img.shields.io/badge/Version-8.3.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.6.3](https://img.shields.io/badge/AppVersion-4.6.3-informational?style=flat-square)
 
 A Helm chart to deploy coturn
 
@@ -20,7 +20,7 @@ A Helm chart to deploy coturn
 
 | Repository | Name | Version |
 |------------|------|---------|
-| oci://registry-1.docker.io/bitnamicharts | mysql | 12.3.2 |
+| oci://registry-1.docker.io/bitnamicharts | mysql | 12.3.3 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 16.6.0 |
 
 ## Values
