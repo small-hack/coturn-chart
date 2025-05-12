@@ -4,6 +4,6 @@ dependencies:
   version: 16.6.0
 - name: mysql
   repository: oci://registry-1.docker.io/bitnamicharts
-  version: 12.3.2
-digest: sha256:dd4f2ca89af5aa278be368a23acb23e122b9ca7a256c7f09bdc4540794b91637
-generated: "2025-03-31T08:28:39.782145841Z"
+  version: 13.0.0
+digest: sha256:3559bc72d816daf8eb5cb62ef082815b632c131173bec7e791eff2a12b11c98f
+generated: "2025-05-12T13:22:43.64376967Z"
