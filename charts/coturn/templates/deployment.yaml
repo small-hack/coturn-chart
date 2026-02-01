@@ -214,6 +214,10 @@ spec:
         - name: "coturn"
           image: {{ include "coturn.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- with .Values.coturn.extraEnvVars }}
+          env:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           args: ["-c", "/turnserver.conf"]
           ports:
             - name: turn-udp
