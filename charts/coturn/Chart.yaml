@@ -4,7 +4,7 @@ type: application
 description: A Helm chart to deploy coturn
 home: "https://github.com/small-hack/coturn-chart"
 
-version: 9.3.0
+version: 9.4.0
 
 # renovate: image=coturn/coturn
 appVersion: 4.8.0

@@ -129,6 +129,13 @@ spec:
                 secretKeyRef:
                   name: {{ include "coturn.auth.secretName" . }}
                   key: {{ .Values.coturn.auth.secretKeys.password }}
+            {{- if or .Values.coturn.auth.staticAuthSecret .Values.coturn.auth.secretKeys.staticAuthSecret }}
+            - name: STATIC_AUTH_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "coturn.auth.secretName" . }}
+                  key: {{ .Values.coturn.auth.secretKeys.staticAuthSecret | default "staticAuthSecret" }}
+            {{- end }}
             {{- if or .Values.externalDatabase.enabled .Values.postgresql.enabled .Values.mysql.enabled }}
             - name: DATABASE_HOSTNAME
             {{- if and .Values.externalDatabase.enabled .Values.externalDatabase.secretKeys.hostname }}
@@ -188,6 +195,10 @@ spec:
               {{- else if or (and .Values.externalDatabase.enabled (eq .Values.externalDatabase.type "mysql")) .Values.mysql.enabled }}
               export CONNECTION_STRING="host=$DATABASE_HOSTNAME dbname=$DATABASE user=$DATABASE_USER password=$DATABASE_PASS port=3306 connect_timeout=10 read_timeout=10" && \
               yq eval -i '.mysql-userdb = env(CONNECTION_STRING)' /data/turnserver.yaml && \
+              {{- end }}
+              {{- if or .Values.coturn.auth.staticAuthSecret .Values.coturn.auth.secretKeys.staticAuthSecret }}
+              yq eval -i '.static-auth-secret = env(STATIC_AUTH_SECRET)' /data/turnserver.yaml && \
+              sed -i '1i use-auth-secret' /data/turnserver.yaml && \
               {{- end }}
               sed -i 's/: /=/' /data/turnserver.yaml && \
               cat /extra/turnserver.conf >> /data/turnserver.yaml && \
