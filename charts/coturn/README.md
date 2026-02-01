@@ -1,6 +1,6 @@
 # coturn
 
-![Version: 9.2.0](https://img.shields.io/badge/Version-9.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.8.0](https://img.shields.io/badge/AppVersion-4.8.0-informational?style=flat-square)
+![Version: 9.3.0](https://img.shields.io/badge/Version-9.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.8.0](https://img.shields.io/badge/AppVersion-4.8.0-informational?style=flat-square)
 
 A Helm chart to deploy coturn
 
@@ -40,6 +40,7 @@ A Helm chart to deploy coturn
 | coturn.auth.secretKeys.password | string | `"password"` | key in existing secret for turn server user's password |
 | coturn.auth.secretKeys.username | string | `"username"` | key in existing secret for turn server user |
 | coturn.auth.username | string | `"coturn"` | username for the main user of the turn server |
+| coturn.extraEnvVars | list | `[]` | Extra environment variables to pass to the Coturn container example:   - name: STATIC_AUTH_SECRET_VAL_OPT     value: supersecretpassword123abcyes |
 | coturn.extraTurnserverConfiguration | string | `"verbose\n"` | extra configuration for turnserver.conf |
 | coturn.initContainer.image.repository | string | `"mikefarah/yq"` | registry and repository for init container config generator image |
 | coturn.initContainer.image.tag | string | `"latest"` | tag for init container config generator image |
@@ -95,7 +96,7 @@ A Helm chart to deploy coturn
 | postgresql.primary.initdb.scriptsConfigMap | string | `""` | ConfigMap with scripts to be run at first boot |
 | replicas | int | `1` |  |
 | resources | object | `{}` | ref: kubernetes.io/docs/concepts/configuration/manage-resources-containers |
-| service.externalTrafficPolicy | string | `""` | I don't actually know what this is 🤔 open a PR if you know    was originally "Local" |
+| service.externalTrafficPolicy | string | `"Cluster"` | determines how external traffic is routed to services. Options:   Cluster: mask client source IP   Local: preserve client source IP (requires service type of NodePort or LoadBalancer) |
 | service.type | string | `"ClusterIP"` | The type of service to deploy for routing Coturn traffic.   ClusterIP: Recommended for DaemonSet configurations. This will create a              standard Kubernetes service for Coturn within the cluster.              No external networking will be configured as the DaemonSet              will handle binding to each Node's host networking    NodePort:  Recommended for Deployment configurations. This will open              TURN ports on every node and route traffic on these ports to              the Coturn pods. You will need to make sure your cloud              provider supports the cluster config setting,              apiserver.service-node-port-range, as this range must contain              the ports defined above for the service to be created.    LoadBalancer: This was what was originally set for this chart in the                 upstream of this fork, but with no details |
 
 ----------------------------------------------
