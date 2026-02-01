@@ -159,6 +159,12 @@ coturn:
     username: "coturn"
     # -- password for the main user of the turn server
     password: ""
+    # -- 'Static' authentication secret value (a string) for TURN REST API only.
+    # If not set, then the turn server
+    # will try to use the 'dynamic' value in the turn_secret table
+    # in the user database (if present). The database-stored  value can be changed on-the-fly
+    # by a separate program, so this is why that mode is considered 'dynamic'.
+    staticAuthSecret: ""
     # -- existing secret with keys username/password for coturn
     existingSecret: ""
     secretKeys:
@@ -166,6 +172,8 @@ coturn:
       username: username
       # -- key in existing secret for turn server user's password
       password: password
+      # -- key in existing secret for coturn static-auth-secret
+      staticAuthSecret: ""
 
   # -- coturn's listening IP address
   listeningIP: "0.0.0.0"
