@@ -7,9 +7,6 @@ metadata:
 {{ include "labels" . | nindent 4 }}
 data:
   turnserver.conf: |-
-    {{- with .Values.coturn.auth.staticAuthSecret }}
-    static-auth-secret={{ . }}
-    {{- end  }}
     realm: {{ .Values.coturn.realm }}
     listening-ip: {{ .Values.coturn.listeningIP }}
     listening-port: {{ .Values.coturn.ports.listening }}
