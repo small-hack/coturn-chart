@@ -7,7 +7,7 @@ home: "https://github.com/small-hack/coturn-chart"
 version: 9.4.0
 
 # renovate: image=coturn/coturn
-appVersion: 4.8.0
+appVersion: 4.9.0
 
 sources:
   - "https://github.com/small-hack/coturn-chart"
