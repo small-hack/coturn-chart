@@ -3,6 +3,9 @@ replicas: 1
 
 # -- different name for the helm release
 nameOverride: ""
+deployment:
+  type: Deployment
+  hostNetwork: false
 
 service:
   # -- The type of service to deploy for routing Coturn traffic.
