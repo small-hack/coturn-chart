@@ -18,6 +18,7 @@ spec:
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
       hostNetwork: {{ and .Values.deployment .Values.deployment.hostNetwork }}
+      dnsPolicy: {{ (.Values.deployment).dnsPolicy | default "ClusterFirst" }}
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}

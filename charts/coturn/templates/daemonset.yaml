@@ -6,7 +6,6 @@ metadata:
   labels:
 {{ include "labels" . | indent 4 }}
 spec:
-  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ .Release.Name }}-coturn
@@ -17,7 +16,8 @@ spec:
         app.kubernetes.io/name: {{ .Release.Name }}-coturn
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
-      hostNetwork: {{ .Values.deployment.hostNetwork | default false }}
+      hostNetwork: {{ (.Values.deployment).hostNetwork | default false }}
+      dnsPolicy: {{ (.Values.deployment).dnsPolicy | default "ClusterFirst" }}
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
