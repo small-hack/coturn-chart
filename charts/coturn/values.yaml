@@ -3,6 +3,11 @@ replicas: 1
 
 # -- different name for the helm release
 nameOverride: ""
+deployment:
+  type: Deployment
+  hostNetwork: false
+  # When hostNetwork is set to true, the dnsPolicy must be set to ClusterFirstWithHostNet so Cluster internal services are still resolvable
+  dnsPolicy: "ClusterFirst"
 
 service:
   # -- The type of service to deploy for routing Coturn traffic.
