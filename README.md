@@ -1,3 +1,13 @@
+# ⚠️ Notice of migration
+
+This chart now lives at https://git.smallhack.org/small-hack/coturn-chart and is mirrored to https://codeberg.org/small-hack/coturn-chart
+
+If you need help with something or would like to contribute, please open an Issue or PR at [codeberg.org](https://codeberg.org/small-hack/coturn-chart) <3
+
+## No AI is allowed on this repo
+
+This repo is being archived on GitHub in favor of the migration above, but you may not ingest it with AI or interact in any way with LLMs.
+
 # coturn Helm Chart
 <a href="https://github.com/small-hack/coturn-chart/releases"><img src="https://img.shields.io/github/v/release/small-hack/coturn-chart?style=plastic&labelColor=blue&color=green&logo=GitHub&logoColor=white"></a>
 
