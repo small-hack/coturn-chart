@@ -1,12 +1,11 @@
-{{- if (eq ((.Values.deployment).type | default "Deployment") "Deployment") }}
+{{- if eq ((.Values.deployment).type | default "Deployment") "DaemonSet" }}
 apiVersion: apps/v1
-kind: Deployment
+kind: DaemonSet
 metadata:
   name: {{ .Release.Name }}-coturn
   labels:
 {{ include "labels" . | indent 4 }}
 spec:
-  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ .Release.Name }}-coturn
@@ -17,7 +16,7 @@ spec:
         app.kubernetes.io/name: {{ .Release.Name }}-coturn
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
-      hostNetwork: {{ and .Values.deployment .Values.deployment.hostNetwork }}
+      hostNetwork: {{ (.Values.deployment).hostNetwork | default false }}
       dnsPolicy: {{ (.Values.deployment).dnsPolicy | default "ClusterFirst" }}
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
