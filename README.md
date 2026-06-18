@@ -1,15 +1,15 @@
 # ⚠️ Notice of migration
 
-This chart now lives at https://git.smallhack.org/small-hack/coturn-chart and is mirrored to https://codeberg.org/small-hack/coturn-chart
+This chart now lives at https://codeberg.org/open-engineering/coturn-chart
 
-If you need help with something or would like to contribute, please open an Issue or PR at [codeberg.org](https://codeberg.org/small-hack/coturn-chart) <3
+If you need help with something or would like to contribute, please open an Issue or PR at [codeberg.org](https://codeberg.org/open-engineering/coturn-chart) <3
 
 ## No AI is allowed on this repo
 
 This repo is being archived on GitHub in favor of the migration above, but you may not ingest it with AI or interact in any way with LLMs.
 
 # coturn Helm Chart
-<a href="https://github.com/small-hack/coturn-chart/releases"><img src="https://img.shields.io/github/v/release/small-hack/coturn-chart?style=plastic&labelColor=blue&color=green&logo=GitHub&logoColor=white"></a>
+<a href="https://github.com/open-engineering-nl/coturn-chart/releases"><img src="https://img.shields.io/github/v/release/open-engineering-nl/coturn-chart?style=plastic&labelColor=blue&color=green&logo=GitHub&logoColor=white"></a>
 
 An unofficial [coturn](https://github.com/coturn/coturn) helm chart using the official [coturn docker image](https://hub.docker.com/r/coturn/coturn).
 
@@ -247,7 +247,7 @@ Source: [Tutorial for turnutils_uclient and Coturn server](https://gist.github.c
     4: (18446744073709551615): INFO: Average jitter 1.700000 ms; min = 0 ms, max = 9 ms
     ```
 
-If you're developing the helm chart, note that we have [GitHub Actions CI jobs](https://github.com/small-hack/coturn-chart/blob/main/.github/workflows/lint-and-test-chart.yaml) to test the chart with sqllite, postgresql, and mysql. You can see an example [here](https://github.com/small-hack/coturn-chart/actions/runs/8451352725).
+If you're developing the helm chart, note that we have [GitHub Actions CI jobs](https://github.com/open-engineering-nl/coturn-chart/blob/main/.github/workflows/lint-and-test-chart.yaml) to test the chart with sqllite, postgresql, and mysql. You can see an example [here](https://github.com/open-engineering-nl/coturn-chart/actions/runs/8451352725).
 
 # Status and Contributing
 This is actively maintained by both live developers and [renovateBot](https://github.com/renovatebot/github-action) via a scheduled Github Action. If you'd like to contribute, please read the [CONTRIBUTING.md](./CONTRIBUTING.md) feel free to open a PR :) If you'd like a feature or want to report a bug, please do that in the GitHub Issues. If you know coturn and k8s well enough, please also feel free to scan the issues and help others <3 We recently moved the repo from jessebot's account to the small-hack org where we maintain all our helm charts.
